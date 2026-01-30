@@ -21,6 +21,7 @@ import {
   XCircle,
   AlertCircle,
   Plus,
+  QrCode,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import ApprovalTimeline from "@/components/events/ApprovalTimeline";
@@ -571,12 +572,22 @@ const MyCreatedEventsPage = () => {
                             View Timeline
                           </Button>
                           {event.status === "APPROVED" && (
-                            <Link to={`/student/events/${event._id}`}>
-                              <Button variant="outline" size="sm">
-                                <Eye className="w-4 h-4" />
-                                View Public Page
-                              </Button>
-                            </Link>
+                            <>
+                              <Link to={`/student/events/${event._id}`}>
+                                <Button variant="outline" size="sm">
+                                  <Eye className="w-4 h-4" />
+                                  View Public Page
+                                </Button>
+                              </Link>
+                              <Link
+                                to={`/organizer/events/${event._id}/attendance`}
+                              >
+                                <Button variant="outline" size="sm">
+                                  <QrCode className="w-4 h-4" />
+                                  Track Attendance
+                                </Button>
+                              </Link>
+                            </>
                           )}
                           {event.status === "REJECTED" && (
                             <Button

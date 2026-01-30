@@ -28,6 +28,7 @@ import {
   isPastDate,
   isToday,
 } from "@/utils/dateUtils";
+import { QRCodeDisplay } from "@/components/qr";
 
 /**
  * My Events Page
@@ -40,6 +41,7 @@ const MyEventsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
+  const [qrDialogOpen, setQrDialogOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [cancelling, setCancelling] = useState(false);
   const [filter, setFilter] = useState("all"); // all, upcoming, past
@@ -210,14 +212,18 @@ const MyEventsPage = () => {
     setCancelDialogOpen(true);
   };
 
-  const handleDownloadQR = (event) => {
+  const openQRDialog = (event) => {
+    setSelectedEvent(event);
+    setQrDialogOpen(true);
     console.log(
-      "%c[ACTION] Downloading QR code",
+      "%c[ACTION] Opening QR code dialog",
       "color: #3b82f6; font-weight: bold",
       event._id,
     );
-    // QR code download logic will be implemented in Task 21
-    alert("QR Code download will be implemented in Task 21");
+  };
+
+  const handleDownloadQR = (event) => {
+    openQRDialog(event);
   };
 
   const getCategoryVariant = (category) => {
@@ -561,6 +567,39 @@ const MyEventsPage = () => {
               loading={cancelling}
             >
               Cancel Registration
+            </Button>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog>
+
+      {/* QR Code Dialog */}
+      <Dialog open={qrDialogOpen} onClose={() => setQrDialogOpen(false)}>
+        <Dialog.Content className="max-w-md">
+          <Dialog.Header>
+            <Dialog.Title>Event QR Code</Dialog.Title>
+            <Dialog.Description>
+              Show this QR code at the event for attendance tracking
+            </Dialog.Description>
+          </Dialog.Header>
+
+          <div className="my-6">
+            {selectedEvent && (
+              <QRCodeDisplay
+                registration={selectedEvent}
+                event={selectedEvent.event}
+                size={256}
+                showActions={true}
+              />
+            )}
+          </div>
+
+          <Dialog.Footer>
+            <Button
+              variant="primary"
+              onClick={() => setQrDialogOpen(false)}
+              className="w-full"
+            >
+              Close
             </Button>
           </Dialog.Footer>
         </Dialog.Content>

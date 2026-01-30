@@ -20,6 +20,7 @@ import {
   OrganizerDashboard,
   CreateEventPage,
   MyCreatedEventsPage,
+  AttendanceTrackingPage,
 } from "@/pages/organizer";
 
 // Faculty Pages
@@ -106,6 +107,10 @@ function App() {
               <Route path="dashboard" element={<OrganizerDashboard />} />
               <Route path="create-event" element={<CreateEventPage />} />
               <Route path="my-events" element={<MyCreatedEventsPage />} />
+              <Route
+                path="events/:eventId/attendance"
+                element={<AttendanceTrackingPage />}
+              />
               <Route
                 path="*"
                 element={<Navigate to="/organizer/dashboard" replace />}
