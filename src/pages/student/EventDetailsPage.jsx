@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Card, Button, Badge, Spinner, Alert, Dialog } from '@/components/ui';
-import { 
-  Calendar, 
-  MapPin, 
-  Users, 
-  Clock, 
-  ArrowLeft, 
+import { useState, useEffect } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { Card, Button, Badge, Spinner, Alert, Dialog } from "@/components/ui";
+import {
+  Calendar,
+  MapPin,
+  Users,
+  Clock,
+  ArrowLeft,
   CheckCircle,
   User,
   Mail,
   Phone,
   Globe,
   Share2,
-  Bookmark
-} from 'lucide-react';
-import { useAuth } from '@/context/AuthContext';
-import eventService from '@/services/eventService';
-import { formatDate, formatDateRange, isPastDate } from '@/utils/dateUtils';
+  Bookmark,
+} from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import eventService from "@/services/eventService";
+import { formatDate, formatDateRange, isPastDate } from "@/utils/dateUtils";
 
 /**
  * Event Details Page
@@ -30,7 +30,7 @@ const EventDetailsPage = () => {
   const { user } = useAuth();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [registering, setRegistering] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [registerDialogOpen, setRegisterDialogOpen] = useState(false);
@@ -43,16 +43,21 @@ const EventDetailsPage = () => {
   const fetchEventDetails = async () => {
     try {
       setLoading(true);
-      setError('');
-      console.log('%c[PAGE] Fetching event details', 'color: #9333ea; font-weight: bold', eventId);
-      
+      setError("");
+      console.log(
+        "%c[PAGE] Fetching event details",
+        "color: #9333ea; font-weight: bold",
+        eventId,
+      );
+
       // Mock data (will be replaced with API call)
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
       const mockEvent = {
         _id: eventId,
-        title: 'Tech Fest 2024',
-        description: 'Join us for the biggest technical festival of the year! Tech Fest 2024 brings together students, professionals, and tech enthusiasts for three days of innovation, competition, and learning.',
+        title: "Tech Fest 2024",
+        description:
+          "Join us for the biggest technical festival of the year! Tech Fest 2024 brings together students, professionals, and tech enthusiasts for three days of innovation, competition, and learning.",
         longDescription: `
           <h3>About the Event</h3>
           <p>Tech Fest 2024 is an annual technical festival that showcases the latest innovations in technology, provides a platform for students to compete in various technical events, and offers opportunities to learn from industry experts.</p>
@@ -79,36 +84,50 @@ const EventDetailsPage = () => {
             <li>Registration confirmation</li>
           </ul>
         `,
-        category: 'TECHNICAL',
-        type: 'OFFLINE',
-        startDate: new Date('2024-03-15T09:00:00'),
-        endDate: new Date('2024-03-17T18:00:00'),
-        location: 'Main Auditorium, Block A',
+        category: "TECHNICAL",
+        type: "OFFLINE",
+        startDate: new Date("2024-03-15T09:00:00"),
+        endDate: new Date("2024-03-17T18:00:00"),
+        location: "Main Auditorium, Block A",
         maxParticipants: 500,
         registeredCount: 324,
         bannerUrl: null,
-        status: 'APPROVED',
+        status: "APPROVED",
         organizer: {
-          name: 'Technical Committee',
-          email: 'tech.committee@college.edu',
-          phone: '+1 234 567 8900',
+          name: "Technical Committee",
+          email: "tech.committee@college.edu",
+          phone: "+1 234 567 8900",
         },
         requirements: [
-          'Must be a registered student',
-          'Age: 18 years and above',
-          'Basic programming knowledge (for hackathon)',
+          "Must be a registered student",
+          "Age: 18 years and above",
+          "Basic programming knowledge (for hackathon)",
         ],
-        tags: ['Technology', 'Hackathon', 'Coding', 'Innovation', 'Competition'],
+        tags: [
+          "Technology",
+          "Hackathon",
+          "Coding",
+          "Innovation",
+          "Competition",
+        ],
       };
 
       setEvent(mockEvent);
       // Mock registration status check
       setIsRegistered(Math.random() > 0.5); // Random for demo
-      
-      console.log('%c[STATE] Event loaded', 'color: #22c55e; font-weight: bold', mockEvent);
+
+      console.log(
+        "%c[STATE] Event loaded",
+        "color: #22c55e; font-weight: bold",
+        mockEvent,
+      );
     } catch (err) {
-      console.error('%c[ERROR] Failed to fetch event', 'color: #ef4444; font-weight: bold', err);
-      setError(err.message || 'Failed to load event details');
+      console.error(
+        "%c[ERROR] Failed to fetch event",
+        "color: #ef4444; font-weight: bold",
+        err,
+      );
+      setError(err.message || "Failed to load event details");
     } finally {
       setLoading(false);
     }
@@ -117,19 +136,30 @@ const EventDetailsPage = () => {
   const handleRegister = async () => {
     try {
       setRegistering(true);
-      console.log('%c[ACTION] Registering for event', 'color: #3b82f6; font-weight: bold', eventId);
-      
+      console.log(
+        "%c[ACTION] Registering for event",
+        "color: #3b82f6; font-weight: bold",
+        eventId,
+      );
+
       // Mock API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
       setIsRegistered(true);
       setRegisterDialogOpen(false);
       setSuccessDialogOpen(true);
-      
-      console.log('%c[STATE] Registration successful', 'color: #22c55e; font-weight: bold');
+
+      console.log(
+        "%c[STATE] Registration successful",
+        "color: #22c55e; font-weight: bold",
+      );
     } catch (err) {
-      console.error('%c[ERROR] Registration failed', 'color: #ef4444; font-weight: bold', err);
-      setError(err.message || 'Failed to register for event');
+      console.error(
+        "%c[ERROR] Registration failed",
+        "color: #ef4444; font-weight: bold",
+        err,
+      );
+      setError(err.message || "Failed to register for event");
     } finally {
       setRegistering(false);
     }
@@ -137,23 +167,23 @@ const EventDetailsPage = () => {
 
   const getCategoryVariant = (category) => {
     const variants = {
-      TECHNICAL: 'primary',
-      CULTURAL: 'secondary',
-      SPORTS: 'success',
-      WORKSHOP: 'warning',
-      SEMINAR: 'info',
-      OTHER: 'neutral',
+      TECHNICAL: "primary",
+      CULTURAL: "secondary",
+      SPORTS: "success",
+      WORKSHOP: "warning",
+      SEMINAR: "info",
+      OTHER: "neutral",
     };
-    return variants[category] || 'neutral';
+    return variants[category] || "neutral";
   };
 
   const getTypeVariant = (type) => {
     const variants = {
-      ONLINE: 'info',
-      OFFLINE: 'success',
-      HYBRID: 'warning',
+      ONLINE: "info",
+      OFFLINE: "success",
+      HYBRID: "warning",
     };
-    return variants[type] || 'neutral';
+    return variants[type] || "neutral";
   };
 
   const getSeatsInfo = () => {
@@ -179,7 +209,7 @@ const EventDetailsPage = () => {
         <Alert variant="error" className="mb-6">
           {error}
         </Alert>
-        <Button onClick={() => navigate('/student/events')}>
+        <Button onClick={() => navigate("/student/events")}>
           <ArrowLeft className="w-4 h-4" />
           Back to Events
         </Button>
@@ -193,7 +223,7 @@ const EventDetailsPage = () => {
         <Alert variant="error" className="mb-6">
           Event not found
         </Alert>
-        <Button onClick={() => navigate('/student/events')}>
+        <Button onClick={() => navigate("/student/events")}>
           <ArrowLeft className="w-4 h-4" />
           Back to Events
         </Button>
@@ -209,7 +239,7 @@ const EventDetailsPage = () => {
       {/* Back Button */}
       <Button
         variant="ghost"
-        onClick={() => navigate('/student/events')}
+        onClick={() => navigate("/student/events")}
         className="mb-6"
       >
         <ArrowLeft className="w-4 h-4" />
@@ -218,7 +248,12 @@ const EventDetailsPage = () => {
 
       {/* Error Alert */}
       {error && (
-        <Alert variant="error" className="mb-6" dismissible onClose={() => setError('')}>
+        <Alert
+          variant="error"
+          className="mb-6"
+          dismissible
+          onClose={() => setError("")}
+        >
           {error}
         </Alert>
       )}
@@ -256,7 +291,9 @@ const EventDetailsPage = () => {
               </h1>
 
               {/* Short Description */}
-              <p className="text-lg text-neutral-600 mb-6">{event.description}</p>
+              <p className="text-lg text-neutral-600 mb-6">
+                {event.description}
+              </p>
 
               {/* Tags */}
               {event.tags && event.tags.length > 0 && (
@@ -280,7 +317,7 @@ const EventDetailsPage = () => {
               <Card.Title>Event Details</Card.Title>
             </Card.Header>
             <Card.Content>
-              <div 
+              <div
                 className="prose prose-neutral max-w-none"
                 dangerouslySetInnerHTML={{ __html: event.longDescription }}
               />
@@ -317,7 +354,9 @@ const EventDetailsPage = () => {
               {/* Seats Info */}
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-neutral-600">Seats Available</span>
+                  <span className="text-sm text-neutral-600">
+                    Seats Available
+                  </span>
                   <span className="text-sm font-semibold text-neutral-900">
                     {seatsInfo.available} / {event.maxParticipants}
                   </span>
@@ -326,10 +365,10 @@ const EventDetailsPage = () => {
                   <div
                     className={`h-full transition-all ${
                       seatsInfo.percentage > 90
-                        ? 'bg-error-500'
+                        ? "bg-error-500"
                         : seatsInfo.percentage > 70
-                        ? 'bg-warning-500'
-                        : 'bg-success-500'
+                          ? "bg-warning-500"
+                          : "bg-success-500"
                     }`}
                     style={{ width: `${seatsInfo.percentage}%` }}
                   />
@@ -378,13 +417,17 @@ const EventDetailsPage = () => {
           {/* Event Info Card */}
           <Card>
             <div className="p-6 space-y-4">
-              <h3 className="font-bold text-neutral-900 mb-4">Event Information</h3>
+              <h3 className="font-bold text-neutral-900 mb-4">
+                Event Information
+              </h3>
 
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <Clock className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-neutral-900">Date & Time</p>
+                    <p className="text-sm font-medium text-neutral-900">
+                      Date & Time
+                    </p>
                     <p className="text-sm text-neutral-600">
                       {formatDateRange(event.startDate, event.endDate)}
                     </p>
@@ -394,7 +437,9 @@ const EventDetailsPage = () => {
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-neutral-900">Location</p>
+                    <p className="text-sm font-medium text-neutral-900">
+                      Location
+                    </p>
                     <p className="text-sm text-neutral-600">{event.location}</p>
                   </div>
                 </div>
@@ -402,19 +447,25 @@ const EventDetailsPage = () => {
                 <div className="flex items-start gap-3">
                   <Users className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-neutral-900">Capacity</p>
+                    <p className="text-sm font-medium text-neutral-900">
+                      Capacity
+                    </p>
                     <p className="text-sm text-neutral-600">
                       {event.maxParticipants} participants
                     </p>
                   </div>
                 </div>
 
-                {event.type === 'ONLINE' && (
+                {event.type === "ONLINE" && (
                   <div className="flex items-start gap-3">
                     <Globe className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="text-sm font-medium text-neutral-900">Platform</p>
-                      <p className="text-sm text-neutral-600">Link will be shared via email</p>
+                      <p className="text-sm font-medium text-neutral-900">
+                        Platform
+                      </p>
+                      <p className="text-sm text-neutral-600">
+                        Link will be shared via email
+                      </p>
                     </div>
                   </div>
                 )}
@@ -430,7 +481,9 @@ const EventDetailsPage = () => {
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <User className="w-5 h-5 text-neutral-400" />
-                  <span className="text-sm text-neutral-900">{event.organizer.name}</span>
+                  <span className="text-sm text-neutral-900">
+                    {event.organizer.name}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-3">
@@ -461,7 +514,10 @@ const EventDetailsPage = () => {
       </div>
 
       {/* Registration Confirmation Dialog */}
-      <Dialog open={registerDialogOpen} onClose={() => setRegisterDialogOpen(false)}>
+      <Dialog
+        open={registerDialogOpen}
+        onClose={() => setRegisterDialogOpen(false)}
+      >
         <Dialog.Content>
           <Dialog.Header>
             <Dialog.Title>Confirm Registration</Dialog.Title>
@@ -480,7 +536,8 @@ const EventDetailsPage = () => {
             </div>
 
             <p className="text-sm text-neutral-600 mt-4">
-              A confirmation email will be sent to <strong>{user?.email}</strong>
+              A confirmation email will be sent to{" "}
+              <strong>{user?.email}</strong>
             </p>
           </div>
 
@@ -504,7 +561,10 @@ const EventDetailsPage = () => {
       </Dialog>
 
       {/* Success Dialog */}
-      <Dialog open={successDialogOpen} onClose={() => setSuccessDialogOpen(false)}>
+      <Dialog
+        open={successDialogOpen}
+        onClose={() => setSuccessDialogOpen(false)}
+      >
         <Dialog.Content>
           <div className="text-center py-6">
             <div className="w-16 h-16 bg-success-100 text-success-600 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -514,8 +574,9 @@ const EventDetailsPage = () => {
               Registration Successful!
             </Dialog.Title>
             <Dialog.Description className="text-center">
-              You have successfully registered for <strong>{event.title}</strong>.
-              Check your email for confirmation and event details.
+              You have successfully registered for{" "}
+              <strong>{event.title}</strong>. Check your email for confirmation
+              and event details.
             </Dialog.Description>
           </div>
 
