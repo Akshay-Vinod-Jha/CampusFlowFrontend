@@ -1,13 +1,18 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { Card, Button, Badge } from "@/components/ui";
+import {
+  StatCard,
+  ApprovalChart,
+  RecentEvents,
+  QuickActions,
+} from "@/components/widgets";
 import {
   CheckSquare,
   Calendar,
   Clock,
   CheckCircle,
   XCircle,
+  FileText,
 } from "lucide-react";
 
 /**
@@ -39,115 +44,139 @@ const FacultyDashboard = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <Card hover>
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-warning-100 text-warning-600 rounded-lg flex items-center justify-center">
-                <Clock className="w-6 h-6" />
-              </div>
-              <Badge variant="warning">Action Required</Badge>
-            </div>
-            <h3 className="text-2xl font-bold text-neutral-900 mb-1">7</h3>
-            <p className="text-sm text-neutral-600">Pending Approvals</p>
-          </div>
-        </Card>
-
-        <Card hover>
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-success-100 text-success-600 rounded-lg flex items-center justify-center">
-                <CheckCircle className="w-6 h-6" />
-              </div>
-              <Badge variant="success">Approved</Badge>
-            </div>
-            <h3 className="text-2xl font-bold text-neutral-900 mb-1">24</h3>
-            <p className="text-sm text-neutral-600">This Month</p>
-          </div>
-        </Card>
-
-        <Card hover>
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-error-100 text-error-600 rounded-lg flex items-center justify-center">
-                <XCircle className="w-6 h-6" />
-              </div>
-              <Badge variant="error">Rejected</Badge>
-            </div>
-            <h3 className="text-2xl font-bold text-neutral-900 mb-1">3</h3>
-            <p className="text-sm text-neutral-600">This Month</p>
-          </div>
-        </Card>
-
-        <Card hover>
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center">
-                <Calendar className="w-6 h-6" />
-              </div>
-              <Badge variant="primary">Total</Badge>
-            </div>
-            <h3 className="text-2xl font-bold text-neutral-900 mb-1">35</h3>
-            <p className="text-sm text-neutral-600">All Events</p>
-          </div>
-        </Card>
+        <StatCard
+          title="Pending Approvals"
+          value={7}
+          icon={Clock}
+          color="warning"
+          subtitle="Require your review"
+        />
+        <StatCard
+          title="Approved This Month"
+          value={24}
+          icon={CheckCircle}
+          color="success"
+          trend={8}
+          trendLabel="vs last month"
+        />
+        <StatCard
+          title="Rejected This Month"
+          value={3}
+          icon={XCircle}
+          color="error"
+          trend={-2}
+          trendLabel="vs last month"
+        />
+        <StatCard
+          title="Total Reviewed"
+          value={35}
+          icon={Calendar}
+          color="primary"
+          subtitle="All time"
+        />
       </div>
 
       {/* Main Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Pending Approvals */}
-        <Card className="lg:col-span-2">
-          <Card.Header>
-            <Card.Title>Pending Approvals</Card.Title>
-            <Card.Description>Events waiting for your review</Card.Description>
-          </Card.Header>
-          <Card.Content>
-            <div className="text-center py-8 text-neutral-500">
-              <CheckSquare className="w-12 h-12 mx-auto mb-3 text-neutral-300" />
-              <p className="text-sm mb-4">
-                You have pending approvals to review
-              </p>
-              <Link to="/faculty/approvals">
-                <Button variant="primary">
-                  <CheckSquare className="w-4 h-4" />
-                  Review Now
-                </Button>
-              </Link>
-            </div>
-          </Card.Content>
-        </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        {/* Pending Events */}
+        <div className="lg:col-span-2">
+          <RecentEvents
+            events={mockPendingEvents}
+            title="Pending Approvals"
+            viewAllLink="/faculty/approvals"
+            maxItems={3}
+          />
+        </div>
 
         {/* Quick Actions */}
-        <Card>
-          <Card.Header>
-            <Card.Title>Quick Actions</Card.Title>
-            <Card.Description>Approval tasks</Card.Description>
-          </Card.Header>
-          <Card.Content>
-            <div className="space-y-3">
-              <Link to="/faculty/approvals" className="block">
-                <Button variant="primary" className="w-full justify-start">
-                  <CheckSquare className="w-4 h-4" />
-                  Review Pending
-                </Button>
-              </Link>
-              <Link to="/faculty/history?status=approved" className="block">
-                <Button variant="outline" className="w-full justify-start">
-                  <CheckCircle className="w-4 h-4" />
-                  Approved Events
-                </Button>
-              </Link>
-              <Link to="/student/events" className="block">
-                <Button variant="outline" className="w-full justify-start">
-                  <Calendar className="w-4 h-4" />
-                  Browse All Events
-                </Button>
-              </Link>
-            </div>
-          </Card.Content>
-        </Card>
+        <QuickActions title="Quick Actions" actions={facultyQuickActions} />
+      </div>
+
+      {/* Approval Chart */}
+      <div className="grid grid-cols-1 gap-6">
+        <ApprovalChart title="Approval Decisions (This Month)" />
       </div>
     </div>
   );
 };
+
+// Mock data
+const mockPendingEvents = [
+  {
+    _id: "1",
+    title: "AI Workshop Series",
+    description: "Hands-on AI and machine learning workshop",
+    category: "WORKSHOP",
+    type: "OFFLINE",
+    startDate: new Date("2024-03-26T14:00:00"),
+    endDate: new Date("2024-03-26T18:00:00"),
+    location: "Lab 301",
+    maxParticipants: 30,
+    registeredCount: 0,
+    status: "PENDING_FACULTY",
+  },
+  {
+    _id: "2",
+    title: "Sports Fest 2024",
+    description: "Annual inter-department sports competition",
+    category: "SPORTS",
+    type: "OFFLINE",
+    startDate: new Date("2024-04-01T08:00:00"),
+    endDate: new Date("2024-04-03T18:00:00"),
+    location: "Sports Complex",
+    maxParticipants: 500,
+    registeredCount: 0,
+    status: "PENDING_FACULTY",
+  },
+  {
+    _id: "3",
+    title: "Entrepreneurship Summit",
+    description: "Startup and business development seminar",
+    category: "SEMINAR",
+    type: "HYBRID",
+    startDate: new Date("2024-03-29T09:00:00"),
+    endDate: new Date("2024-03-29T17:00:00"),
+    location: "Conference Hall / Webex",
+    maxParticipants: 100,
+    registeredCount: 0,
+    status: "PENDING_FACULTY",
+  },
+];
+
+const facultyQuickActions = [
+  {
+    label: "Review Approvals",
+    description: "Pending requests",
+    icon: CheckSquare,
+    link: "/faculty/approvals",
+    color: "bg-warning-100",
+    iconColor: "text-warning-600",
+    badge: "7",
+  },
+  {
+    label: "Approved Events",
+    description: "View approved",
+    icon: CheckCircle,
+    link: "/faculty/history?status=approved",
+    color: "bg-success-100",
+    iconColor: "text-success-600",
+  },
+  {
+    label: "Approval History",
+    description: "All decisions",
+    icon: FileText,
+    link: "/faculty/history",
+    color: "bg-primary-100",
+    iconColor: "text-primary-600",
+  },
+  {
+    label: "Browse Events",
+    description: "View all events",
+    icon: Calendar,
+    link: "/student/events",
+    color: "bg-info-100",
+    iconColor: "text-info-600",
+  },
+];
 
 export default FacultyDashboard;

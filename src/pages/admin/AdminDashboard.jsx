@@ -1,7 +1,13 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { Card, Button, Badge } from "@/components/ui";
+import {
+  StatCard,
+  ApprovalChart,
+  RegistrationChart,
+  CategoryChart,
+  RecentEvents,
+  QuickActions,
+} from "@/components/widgets";
 import {
   BarChart3,
   Users,
@@ -9,6 +15,7 @@ import {
   CheckSquare,
   TrendingUp,
   Settings,
+  Shield,
 } from "lucide-react";
 
 /**
@@ -41,118 +48,189 @@ const AdminDashboard = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <Card hover>
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-primary-100 text-primary-600 rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6" />
-              </div>
-              <Badge variant="primary">Active</Badge>
-            </div>
-            <h3 className="text-2xl font-bold text-neutral-900 mb-1">1,234</h3>
-            <p className="text-sm text-neutral-600">Total Users</p>
-          </div>
-        </Card>
+        <StatCard
+          title="Total Users"
+          value={1234}
+          icon={Users}
+          color="primary"
+          trend={12}
+          trendLabel="vs last month"
+        />
+        <StatCard
+          title="Active Events"
+          value={48}
+          icon={Calendar}
+          color="success"
+          trend={23}
+          trendLabel="vs last month"
+        />
+        <StatCard
+          title="Final Approvals"
+          value={12}
+          icon={CheckSquare}
+          color="warning"
+          subtitle="Awaiting review"
+        />
+        <StatCard
+          title="System Activity"
+          value="+23%"
+          icon={TrendingUp}
+          color="info"
+          trend={5}
+          trendLabel="engagement"
+        />
+      </div>
 
-        <Card hover>
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-secondary-100 text-secondary-600 rounded-lg flex items-center justify-center">
-                <Calendar className="w-6 h-6" />
-              </div>
-              <Badge variant="success">Live</Badge>
-            </div>
-            <h3 className="text-2xl font-bold text-neutral-900 mb-1">48</h3>
-            <p className="text-sm text-neutral-600">Active Events</p>
-          </div>
-        </Card>
+      {/* Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <RegistrationChart title="Monthly Registration Trends" />
+        <CategoryChart title="Events by Category" />
+      </div>
 
-        <Card hover>
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-warning-100 text-warning-600 rounded-lg flex items-center justify-center">
-                <CheckSquare className="w-6 h-6" />
-              </div>
-              <Badge variant="warning">Pending</Badge>
+      {/* Second Charts Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <ApprovalChart title="Approval Status Overview" />
+        <div className="bg-white rounded-lg border-2 border-neutral-200 p-6">
+          <div className="flex items-center mb-4">
+            <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-3">
+              <BarChart3 className="w-6 h-6 text-primary-600" />
             </div>
-            <h3 className="text-2xl font-bold text-neutral-900 mb-1">12</h3>
-            <p className="text-sm text-neutral-600">Pending Approvals</p>
-          </div>
-        </Card>
-
-        <Card hover>
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-success-100 text-success-600 rounded-lg flex items-center justify-center">
-                <TrendingUp className="w-6 h-6" />
-              </div>
-              <Badge variant="success">Growth</Badge>
+            <div>
+              <h3 className="font-semibold text-neutral-900">
+                System Statistics
+              </h3>
+              <p className="text-sm text-neutral-600">
+                Key performance metrics
+              </p>
             </div>
-            <h3 className="text-2xl font-bold text-neutral-900 mb-1">+23%</h3>
-            <p className="text-sm text-neutral-600">vs Last Month</p>
           </div>
-        </Card>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-neutral-600">
+                Total Registrations
+              </span>
+              <span className="font-semibold text-neutral-900">2,456</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-neutral-600">
+                Active Organizers
+              </span>
+              <span className="font-semibold text-neutral-900">45</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-neutral-600">Faculty Members</span>
+              <span className="font-semibold text-neutral-900">32</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-sm text-neutral-600">Total Students</span>
+              <span className="font-semibold text-neutral-900">1,157</span>
+            </div>
+            <div className="flex justify-between items-center pt-4 border-t border-neutral-200">
+              <span className="text-sm font-semibold text-neutral-900">
+                Avg. Event Size
+              </span>
+              <span className="font-bold text-primary-600">51 attendees</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Analytics */}
-        <Card className="lg:col-span-2">
-          <Card.Header>
-            <Card.Title>Event Analytics</Card.Title>
-            <Card.Description>
-              Monthly event activity and registrations
-            </Card.Description>
-          </Card.Header>
-          <Card.Content>
-            <div className="text-center py-8 text-neutral-500">
-              <BarChart3 className="w-12 h-12 mx-auto mb-3 text-neutral-300" />
-              <p className="text-sm mb-2">
-                Analytics and reporting coming soon
-              </p>
-              <p className="text-xs text-neutral-400">Using Recharts library</p>
-            </div>
-          </Card.Content>
-        </Card>
+        {/* Recent Activity */}
+        <div className="lg:col-span-2">
+          <RecentEvents
+            events={mockRecentActivity}
+            title="Recent System Activity"
+            viewAllLink="/student/events"
+            maxItems={3}
+          />
+        </div>
 
         {/* Quick Actions */}
-        <Card>
-          <Card.Header>
-            <Card.Title>Quick Actions</Card.Title>
-            <Card.Description>Admin tools</Card.Description>
-          </Card.Header>
-          <Card.Content>
-            <div className="space-y-3">
-              <Link to="/admin/users" className="block">
-                <Button variant="primary" className="w-full justify-start">
-                  <Users className="w-4 h-4" />
-                  Manage Users
-                </Button>
-              </Link>
-              <Link to="/admin/approvals" className="block">
-                <Button variant="outline" className="w-full justify-start">
-                  <CheckSquare className="w-4 h-4" />
-                  Review Approvals
-                </Button>
-              </Link>
-              <Link to="/admin/analytics" className="block">
-                <Button variant="outline" className="w-full justify-start">
-                  <BarChart3 className="w-4 h-4" />
-                  View Analytics
-                </Button>
-              </Link>
-              <Link to="/student/events" className="block">
-                <Button variant="outline" className="w-full justify-start">
-                  <Calendar className="w-4 h-4" />
-                  Browse Events
-                </Button>
-              </Link>
-            </div>
-          </Card.Content>
-        </Card>
+        <QuickActions title="Admin Tools" actions={adminQuickActions} />
       </div>
     </div>
   );
 };
+
+// Mock data
+const mockRecentActivity = [
+  {
+    _id: "1",
+    title: "System-wide Hackathon",
+    description: "24-hour coding marathon",
+    category: "TECHNICAL",
+    type: "OFFLINE",
+    startDate: new Date("2024-04-05T09:00:00"),
+    endDate: new Date("2024-04-06T09:00:00"),
+    location: "Main Campus",
+    maxParticipants: 200,
+    registeredCount: 180,
+    status: "PENDING_ADMIN",
+  },
+  {
+    _id: "2",
+    title: "Annual Convocation",
+    description: "Graduation ceremony",
+    category: "OTHER",
+    type: "OFFLINE",
+    startDate: new Date("2024-04-10T10:00:00"),
+    endDate: new Date("2024-04-10T14:00:00"),
+    location: "Auditorium",
+    maxParticipants: 1000,
+    registeredCount: 856,
+    status: "APPROVED",
+  },
+  {
+    _id: "3",
+    title: "Faculty Development Program",
+    description: "Teaching excellence workshop",
+    category: "SEMINAR",
+    type: "HYBRID",
+    startDate: new Date("2024-04-08T14:00:00"),
+    endDate: new Date("2024-04-08T17:00:00"),
+    location: "Conference Hall / Teams",
+    maxParticipants: 50,
+    registeredCount: 42,
+    status: "APPROVED",
+  },
+];
+
+const adminQuickActions = [
+  {
+    label: "Final Approvals",
+    description: "Review requests",
+    icon: CheckSquare,
+    link: "/admin/approvals",
+    color: "bg-warning-100",
+    iconColor: "text-warning-600",
+    badge: "12",
+  },
+  {
+    label: "User Management",
+    description: "Manage users",
+    icon: Users,
+    link: "/admin/users",
+    color: "bg-primary-100",
+    iconColor: "text-primary-600",
+  },
+  {
+    label: "System Analytics",
+    description: "View reports",
+    icon: BarChart3,
+    link: "/admin/analytics",
+    color: "bg-info-100",
+    iconColor: "text-info-600",
+  },
+  {
+    label: "Settings",
+    description: "System config",
+    icon: Settings,
+    link: "/admin/settings",
+    color: "bg-neutral-100",
+    iconColor: "text-neutral-600",
+  },
+];
 
 export default AdminDashboard;
