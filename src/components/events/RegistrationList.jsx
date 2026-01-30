@@ -1,19 +1,31 @@
-import { Card, Badge, EmptyState, Button } from '@/components/ui';
-import { Users, Mail, Phone, Calendar, Download, UserCheck } from 'lucide-react';
-import { formatDate } from '@/utils/dateUtils';
+import { Card, Badge, EmptyState, Button } from "@/components/ui";
+import {
+  Users,
+  Mail,
+  Phone,
+  Calendar,
+  Download,
+  UserCheck,
+} from "lucide-react";
+import { formatDate } from "@/utils/dateUtils";
 
 /**
  * RegistrationList Component
  * Display list of registered users for an event
  */
 
-const RegistrationList = ({ registrations = [], eventTitle, onExport, showActions = true }) => {
+const RegistrationList = ({
+  registrations = [],
+  eventTitle,
+  onExport,
+  showActions = true,
+}) => {
   const getStatusBadge = (status) => {
     const badges = {
-      REGISTERED: { variant: 'success', label: 'Registered' },
-      ATTENDED: { variant: 'primary', label: 'Attended' },
-      CANCELLED: { variant: 'error', label: 'Cancelled' },
-      WAITLIST: { variant: 'warning', label: 'Waitlist' },
+      REGISTERED: { variant: "success", label: "Registered" },
+      ATTENDED: { variant: "primary", label: "Attended" },
+      CANCELLED: { variant: "error", label: "Cancelled" },
+      WAITLIST: { variant: "warning", label: "Waitlist" },
     };
     const badge = badges[status] || badges.REGISTERED;
     return <Badge variant={badge.variant}>{badge.label}</Badge>;
@@ -40,7 +52,8 @@ const RegistrationList = ({ registrations = [], eventTitle, onExport, showAction
           <div>
             <Card.Title>Registered Participants</Card.Title>
             <Card.Description>
-              {registrations.length} participant{registrations.length !== 1 ? 's' : ''}{' '}
+              {registrations.length} participant
+              {registrations.length !== 1 ? "s" : ""}{" "}
               {eventTitle && `for ${eventTitle}`}
             </Card.Description>
           </div>
@@ -63,7 +76,7 @@ const RegistrationList = ({ registrations = [], eventTitle, onExport, showAction
                 {/* Avatar */}
                 <div className="w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <span className="font-semibold text-sm">
-                    {registration.user?.name?.charAt(0).toUpperCase() || 'U'}
+                    {registration.user?.name?.charAt(0).toUpperCase() || "U"}
                   </span>
                 </div>
 
@@ -71,7 +84,7 @@ const RegistrationList = ({ registrations = [], eventTitle, onExport, showAction
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <h4 className="font-semibold text-neutral-900">
-                      {registration.user?.name || 'Unknown User'}
+                      {registration.user?.name || "Unknown User"}
                     </h4>
                     {getStatusBadge(registration.status)}
                   </div>
@@ -80,7 +93,9 @@ const RegistrationList = ({ registrations = [], eventTitle, onExport, showAction
                     {registration.user?.email && (
                       <div className="flex items-center gap-2 text-sm text-neutral-600">
                         <Mail className="w-3 h-3" />
-                        <span className="truncate">{registration.user.email}</span>
+                        <span className="truncate">
+                          {registration.user.email}
+                        </span>
                       </div>
                     )}
 
@@ -93,26 +108,31 @@ const RegistrationList = ({ registrations = [], eventTitle, onExport, showAction
 
                     {registration.user?.department && (
                       <div className="text-sm text-neutral-600">
-                        <span className="font-medium">Department:</span>{' '}
+                        <span className="font-medium">Department:</span>{" "}
                         {registration.user.department}
                       </div>
                     )}
 
                     {registration.user?.year && (
                       <div className="text-sm text-neutral-600">
-                        <span className="font-medium">Year:</span> {registration.user.year}
+                        <span className="font-medium">Year:</span>{" "}
+                        {registration.user.year}
                       </div>
                     )}
 
                     <div className="flex items-center gap-2 text-xs text-neutral-500 mt-2">
                       <Calendar className="w-3 h-3" />
-                      <span>Registered on {formatDate(registration.registeredAt)}</span>
+                      <span>
+                        Registered on {formatDate(registration.registeredAt)}
+                      </span>
                     </div>
 
                     {registration.attendedAt && (
                       <div className="flex items-center gap-2 text-xs text-success-600 mt-1">
                         <UserCheck className="w-3 h-3" />
-                        <span>Attended on {formatDate(registration.attendedAt)}</span>
+                        <span>
+                          Attended on {formatDate(registration.attendedAt)}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -136,25 +156,25 @@ const RegistrationList = ({ registrations = [], eventTitle, onExport, showAction
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
               <p className="text-2xl font-bold text-neutral-900">
-                {registrations.filter((r) => r.status === 'REGISTERED').length}
+                {registrations.filter((r) => r.status === "REGISTERED").length}
               </p>
               <p className="text-sm text-neutral-600">Registered</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-success-600">
-                {registrations.filter((r) => r.status === 'ATTENDED').length}
+                {registrations.filter((r) => r.status === "ATTENDED").length}
               </p>
               <p className="text-sm text-neutral-600">Attended</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-warning-600">
-                {registrations.filter((r) => r.status === 'WAITLIST').length}
+                {registrations.filter((r) => r.status === "WAITLIST").length}
               </p>
               <p className="text-sm text-neutral-600">Waitlist</p>
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-error-600">
-                {registrations.filter((r) => r.status === 'CANCELLED').length}
+                {registrations.filter((r) => r.status === "CANCELLED").length}
               </p>
               <p className="text-sm text-neutral-600">Cancelled</p>
             </div>

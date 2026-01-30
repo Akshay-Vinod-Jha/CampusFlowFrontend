@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { Card, Badge, Button } from '@/components/ui';
+import { Link } from "react-router-dom";
+import { Card, Badge, Button } from "@/components/ui";
 import {
   Calendar,
   MapPin,
@@ -9,8 +9,8 @@ import {
   CheckCircle,
   XCircle,
   AlertCircle,
-} from 'lucide-react';
-import { formatDate, formatDateRange, isPastDate } from '@/utils/dateUtils';
+} from "lucide-react";
+import { formatDate, formatDateRange, isPastDate } from "@/utils/dateUtils";
 
 /**
  * EventCard Component
@@ -21,38 +21,42 @@ const EventCard = ({
   event,
   showStatus = false,
   showActions = true,
-  actionLabel = 'View Details',
+  actionLabel = "View Details",
   onAction,
-  variant = 'default', // default, compact, featured
+  variant = "default", // default, compact, featured
 }) => {
   const getCategoryVariant = (category) => {
     const variants = {
-      TECHNICAL: 'primary',
-      CULTURAL: 'secondary',
-      SPORTS: 'success',
-      WORKSHOP: 'warning',
-      SEMINAR: 'info',
-      OTHER: 'neutral',
+      TECHNICAL: "primary",
+      CULTURAL: "secondary",
+      SPORTS: "success",
+      WORKSHOP: "warning",
+      SEMINAR: "info",
+      OTHER: "neutral",
     };
-    return variants[category] || 'neutral';
+    return variants[category] || "neutral";
   };
 
   const getTypeVariant = (type) => {
     const variants = {
-      ONLINE: 'info',
-      OFFLINE: 'success',
-      HYBRID: 'warning',
+      ONLINE: "info",
+      OFFLINE: "success",
+      HYBRID: "warning",
     };
-    return variants[type] || 'neutral';
+    return variants[type] || "neutral";
   };
 
   const getStatusBadge = (status) => {
     const badges = {
-      DRAFT: { variant: 'neutral', icon: AlertCircle, label: 'Draft' },
-      FACULTY_PENDING: { variant: 'warning', icon: Clock, label: 'Faculty Review' },
-      ADMIN_PENDING: { variant: 'warning', icon: Clock, label: 'Admin Review' },
-      APPROVED: { variant: 'success', icon: CheckCircle, label: 'Approved' },
-      REJECTED: { variant: 'error', icon: XCircle, label: 'Rejected' },
+      DRAFT: { variant: "neutral", icon: AlertCircle, label: "Draft" },
+      FACULTY_PENDING: {
+        variant: "warning",
+        icon: Clock,
+        label: "Faculty Review",
+      },
+      ADMIN_PENDING: { variant: "warning", icon: Clock, label: "Admin Review" },
+      APPROVED: { variant: "success", icon: CheckCircle, label: "Approved" },
+      REJECTED: { variant: "error", icon: XCircle, label: "Rejected" },
     };
     const badge = badges[status] || badges.DRAFT;
     const Icon = badge.icon;
@@ -68,9 +72,10 @@ const EventCard = ({
   const isPast = isPastDate(event.endDate);
   const seatsAvailable = event.maxParticipants - (event.registeredCount || 0);
   const isFullyBooked = seatsAvailable <= 0;
-  const isAlmostFull = seatsAvailable > 0 && seatsAvailable <= event.maxParticipants * 0.2;
+  const isAlmostFull =
+    seatsAvailable > 0 && seatsAvailable <= event.maxParticipants * 0.2;
 
-  if (variant === 'compact') {
+  if (variant === "compact") {
     return (
       <Card hover className="overflow-hidden">
         <div className="p-4">
@@ -87,7 +92,11 @@ const EventCard = ({
                   {event.type}
                 </Badge>
                 {showStatus && getStatusBadge(event.status)}
-                {isPast && <Badge variant="neutral" size="sm">Past</Badge>}
+                {isPast && (
+                  <Badge variant="neutral" size="sm">
+                    Past
+                  </Badge>
+                )}
               </div>
             </div>
           </div>
@@ -95,7 +104,9 @@ const EventCard = ({
           <div className="space-y-1 text-sm text-neutral-600 mb-3">
             <div className="flex items-center gap-2">
               <Clock className="w-3 h-3" />
-              <span className="line-clamp-1">{formatDateRange(event.startDate, event.endDate)}</span>
+              <span className="line-clamp-1">
+                {formatDateRange(event.startDate, event.endDate)}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-3 h-3" />
@@ -119,7 +130,7 @@ const EventCard = ({
     );
   }
 
-  if (variant === 'featured') {
+  if (variant === "featured") {
     return (
       <Card hover className="overflow-hidden">
         <div className="relative">
@@ -142,15 +153,21 @@ const EventCard = ({
 
         <div className="p-6">
           <div className="flex items-center gap-2 flex-wrap mb-3">
-            <Badge variant={getCategoryVariant(event.category)}>{event.category}</Badge>
+            <Badge variant={getCategoryVariant(event.category)}>
+              {event.category}
+            </Badge>
             <Badge variant={getTypeVariant(event.type)}>{event.type}</Badge>
             {isFullyBooked && <Badge variant="error">Fully Booked</Badge>}
             {isAlmostFull && <Badge variant="warning">Almost Full</Badge>}
           </div>
 
-          <h3 className="text-xl font-bold text-neutral-900 mb-2">{event.title}</h3>
+          <h3 className="text-xl font-bold text-neutral-900 mb-2">
+            {event.title}
+          </h3>
 
-          <p className="text-sm text-neutral-600 mb-4 line-clamp-2">{event.description}</p>
+          <p className="text-sm text-neutral-600 mb-4 line-clamp-2">
+            {event.description}
+          </p>
 
           <div className="space-y-2 mb-4">
             <div className="flex items-center gap-2 text-sm text-neutral-600">
@@ -164,8 +181,9 @@ const EventCard = ({
             <div className="flex items-center gap-2 text-sm text-neutral-600">
               <Users className="w-4 h-4" />
               <span>
-                {event.registeredCount || 0} / {event.maxParticipants} registered
-                {isFullyBooked && ' • Waitlist available'}
+                {event.registeredCount || 0} / {event.maxParticipants}{" "}
+                registered
+                {isFullyBooked && " • Waitlist available"}
               </span>
             </div>
           </div>
@@ -203,7 +221,9 @@ const EventCard = ({
         <div className="flex-1 p-6">
           <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-2 flex-wrap">
-              <Badge variant={getCategoryVariant(event.category)}>{event.category}</Badge>
+              <Badge variant={getCategoryVariant(event.category)}>
+                {event.category}
+              </Badge>
               <Badge variant={getTypeVariant(event.type)}>{event.type}</Badge>
               {showStatus && getStatusBadge(event.status)}
               {isFullyBooked && <Badge variant="error">Fully Booked</Badge>}
@@ -211,9 +231,13 @@ const EventCard = ({
             </div>
           </div>
 
-          <h3 className="text-xl font-bold text-neutral-900 mb-2">{event.title}</h3>
+          <h3 className="text-xl font-bold text-neutral-900 mb-2">
+            {event.title}
+          </h3>
 
-          <p className="text-sm text-neutral-600 mb-4 line-clamp-2">{event.description}</p>
+          <p className="text-sm text-neutral-600 mb-4 line-clamp-2">
+            {event.description}
+          </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
             <div className="flex items-center gap-2 text-sm text-neutral-600">
@@ -234,7 +258,11 @@ const EventCard = ({
 
           {showActions && (
             <div className="flex flex-wrap gap-2">
-              <Button variant="primary" size="sm" onClick={() => onAction?.(event)}>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => onAction?.(event)}
+              >
                 <Eye className="w-4 h-4" />
                 {actionLabel}
               </Button>

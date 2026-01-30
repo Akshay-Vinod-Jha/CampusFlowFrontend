@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Search, X } from 'lucide-react';
+import { useState } from "react";
+import { Search, X } from "lucide-react";
 
 /**
  * SearchBar Component
@@ -7,13 +7,13 @@ import { Search, X } from 'lucide-react';
  */
 
 const SearchBar = ({
-  placeholder = 'Search events...',
+  placeholder = "Search events...",
   onSearch,
   onChange,
   debounceMs = 300,
-  className = '',
+  className = "",
 }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [debounceTimer, setDebounceTimer] = useState(null);
 
   const handleChange = (e) => {
@@ -31,7 +31,11 @@ const SearchBar = ({
     // Set new debounce timer for onSearch
     if (onSearch) {
       const timer = setTimeout(() => {
-        console.log('%c[SEARCH] Query:', 'color: #3b82f6; font-weight: bold', value);
+        console.log(
+          "%c[SEARCH] Query:",
+          "color: #3b82f6; font-weight: bold",
+          value,
+        );
         onSearch(value);
       }, debounceMs);
       setDebounceTimer(timer);
@@ -39,14 +43,14 @@ const SearchBar = ({
   };
 
   const handleClear = () => {
-    setSearchTerm('');
-    onChange?.('');
-    onSearch?.('');
-    console.log('%c[SEARCH] Cleared', 'color: #3b82f6; font-weight: bold');
+    setSearchTerm("");
+    onChange?.("");
+    onSearch?.("");
+    console.log("%c[SEARCH] Cleared", "color: #3b82f6; font-weight: bold");
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       // Clear debounce timer and search immediately
       if (debounceTimer) {
         clearTimeout(debounceTimer);

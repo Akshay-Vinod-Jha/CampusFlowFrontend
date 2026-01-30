@@ -1,61 +1,74 @@
-import { useState } from 'react';
-import { Card, Button, Badge } from '@/components/ui';
-import { Filter, X, Calendar } from 'lucide-react';
+import { useState } from "react";
+import { Card, Button, Badge } from "@/components/ui";
+import { Filter, X, Calendar } from "lucide-react";
 
 /**
  * EventFilters Component
  * Reusable filter component for events (category, type, date)
  */
 
-const EventFilters = ({ onFilterChange, initialFilters = {}, compact = false }) => {
+const EventFilters = ({
+  onFilterChange,
+  initialFilters = {},
+  compact = false,
+}) => {
   const [filters, setFilters] = useState({
-    category: initialFilters.category || 'all',
-    type: initialFilters.type || 'all',
-    dateRange: initialFilters.dateRange || 'all',
+    category: initialFilters.category || "all",
+    type: initialFilters.type || "all",
+    dateRange: initialFilters.dateRange || "all",
   });
 
   const categories = [
-    { value: 'all', label: 'All Categories' },
-    { value: 'TECHNICAL', label: 'Technical' },
-    { value: 'CULTURAL', label: 'Cultural' },
-    { value: 'SPORTS', label: 'Sports' },
-    { value: 'WORKSHOP', label: 'Workshop' },
-    { value: 'SEMINAR', label: 'Seminar' },
-    { value: 'OTHER', label: 'Other' },
+    { value: "all", label: "All Categories" },
+    { value: "TECHNICAL", label: "Technical" },
+    { value: "CULTURAL", label: "Cultural" },
+    { value: "SPORTS", label: "Sports" },
+    { value: "WORKSHOP", label: "Workshop" },
+    { value: "SEMINAR", label: "Seminar" },
+    { value: "OTHER", label: "Other" },
   ];
 
   const types = [
-    { value: 'all', label: 'All Types' },
-    { value: 'ONLINE', label: 'Online' },
-    { value: 'OFFLINE', label: 'Offline' },
-    { value: 'HYBRID', label: 'Hybrid' },
+    { value: "all", label: "All Types" },
+    { value: "ONLINE", label: "Online" },
+    { value: "OFFLINE", label: "Offline" },
+    { value: "HYBRID", label: "Hybrid" },
   ];
 
   const dateRanges = [
-    { value: 'all', label: 'All Time' },
-    { value: 'today', label: 'Today' },
-    { value: 'week', label: 'This Week' },
-    { value: 'month', label: 'This Month' },
-    { value: 'upcoming', label: 'Upcoming' },
-    { value: 'past', label: 'Past Events' },
+    { value: "all", label: "All Time" },
+    { value: "today", label: "Today" },
+    { value: "week", label: "This Week" },
+    { value: "month", label: "This Month" },
+    { value: "upcoming", label: "Upcoming" },
+    { value: "past", label: "Past Events" },
   ];
 
   const handleFilterChange = (filterType, value) => {
     const newFilters = { ...filters, [filterType]: value };
     setFilters(newFilters);
     onFilterChange?.(newFilters);
-    console.log('%c[FILTER] Applied filters', 'color: #3b82f6; font-weight: bold', newFilters);
+    console.log(
+      "%c[FILTER] Applied filters",
+      "color: #3b82f6; font-weight: bold",
+      newFilters,
+    );
   };
 
   const clearFilters = () => {
-    const defaultFilters = { category: 'all', type: 'all', dateRange: 'all' };
+    const defaultFilters = { category: "all", type: "all", dateRange: "all" };
     setFilters(defaultFilters);
     onFilterChange?.(defaultFilters);
-    console.log('%c[FILTER] Cleared all filters', 'color: #3b82f6; font-weight: bold');
+    console.log(
+      "%c[FILTER] Cleared all filters",
+      "color: #3b82f6; font-weight: bold",
+    );
   };
 
   const hasActiveFilters =
-    filters.category !== 'all' || filters.type !== 'all' || filters.dateRange !== 'all';
+    filters.category !== "all" ||
+    filters.type !== "all" ||
+    filters.dateRange !== "all";
 
   if (compact) {
     return (
@@ -68,7 +81,7 @@ const EventFilters = ({ onFilterChange, initialFilters = {}, compact = false }) 
         {/* Category */}
         <select
           value={filters.category}
-          onChange={(e) => handleFilterChange('category', e.target.value)}
+          onChange={(e) => handleFilterChange("category", e.target.value)}
           className="px-3 py-1.5 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
         >
           {categories.map((cat) => (
@@ -81,7 +94,7 @@ const EventFilters = ({ onFilterChange, initialFilters = {}, compact = false }) 
         {/* Type */}
         <select
           value={filters.type}
-          onChange={(e) => handleFilterChange('type', e.target.value)}
+          onChange={(e) => handleFilterChange("type", e.target.value)}
           className="px-3 py-1.5 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
         >
           {types.map((type) => (
@@ -94,7 +107,7 @@ const EventFilters = ({ onFilterChange, initialFilters = {}, compact = false }) 
         {/* Date Range */}
         <select
           value={filters.dateRange}
-          onChange={(e) => handleFilterChange('dateRange', e.target.value)}
+          onChange={(e) => handleFilterChange("dateRange", e.target.value)}
           className="px-3 py-1.5 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
         >
           {dateRanges.map((range) => (
@@ -141,11 +154,11 @@ const EventFilters = ({ onFilterChange, initialFilters = {}, compact = false }) 
               {categories.map((cat) => (
                 <button
                   key={cat.value}
-                  onClick={() => handleFilterChange('category', cat.value)}
+                  onClick={() => handleFilterChange("category", cat.value)}
                   className={`px-3 py-2 text-sm rounded-lg border transition-colors ${
                     filters.category === cat.value
-                      ? 'border-primary-500 bg-primary-50 text-primary-700 font-medium'
-                      : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                      ? "border-primary-500 bg-primary-50 text-primary-700 font-medium"
+                      : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300"
                   }`}
                 >
                   {cat.label}
@@ -156,16 +169,18 @@ const EventFilters = ({ onFilterChange, initialFilters = {}, compact = false }) 
 
           {/* Type Filter */}
           <div>
-            <label className="block text-sm font-medium text-neutral-700 mb-3">Type</label>
+            <label className="block text-sm font-medium text-neutral-700 mb-3">
+              Type
+            </label>
             <div className="grid grid-cols-2 gap-2">
               {types.map((type) => (
                 <button
                   key={type.value}
-                  onClick={() => handleFilterChange('type', type.value)}
+                  onClick={() => handleFilterChange("type", type.value)}
                   className={`px-3 py-2 text-sm rounded-lg border transition-colors ${
                     filters.type === type.value
-                      ? 'border-primary-500 bg-primary-50 text-primary-700 font-medium'
-                      : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                      ? "border-primary-500 bg-primary-50 text-primary-700 font-medium"
+                      : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300"
                   }`}
                 >
                   {type.label}
@@ -184,11 +199,11 @@ const EventFilters = ({ onFilterChange, initialFilters = {}, compact = false }) 
               {dateRanges.map((range) => (
                 <button
                   key={range.value}
-                  onClick={() => handleFilterChange('dateRange', range.value)}
+                  onClick={() => handleFilterChange("dateRange", range.value)}
                   className={`px-3 py-2 text-sm rounded-lg border transition-colors ${
                     filters.dateRange === range.value
-                      ? 'border-primary-500 bg-primary-50 text-primary-700 font-medium'
-                      : 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300'
+                      ? "border-primary-500 bg-primary-50 text-primary-700 font-medium"
+                      : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-300"
                   }`}
                 >
                   {range.label}
@@ -200,21 +215,29 @@ const EventFilters = ({ onFilterChange, initialFilters = {}, compact = false }) 
           {/* Active Filters Summary */}
           {hasActiveFilters && (
             <div className="pt-4 border-t border-neutral-200">
-              <p className="text-sm font-medium text-neutral-700 mb-2">Active Filters:</p>
+              <p className="text-sm font-medium text-neutral-700 mb-2">
+                Active Filters:
+              </p>
               <div className="flex flex-wrap gap-2">
-                {filters.category !== 'all' && (
+                {filters.category !== "all" && (
                   <Badge variant="primary">
-                    {categories.find((c) => c.value === filters.category)?.label}
+                    {
+                      categories.find((c) => c.value === filters.category)
+                        ?.label
+                    }
                   </Badge>
                 )}
-                {filters.type !== 'all' && (
+                {filters.type !== "all" && (
                   <Badge variant="info">
                     {types.find((t) => t.value === filters.type)?.label}
                   </Badge>
                 )}
-                {filters.dateRange !== 'all' && (
+                {filters.dateRange !== "all" && (
                   <Badge variant="warning">
-                    {dateRanges.find((d) => d.value === filters.dateRange)?.label}
+                    {
+                      dateRanges.find((d) => d.value === filters.dateRange)
+                        ?.label
+                    }
                   </Badge>
                 )}
               </div>
