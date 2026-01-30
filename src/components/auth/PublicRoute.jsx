@@ -1,6 +1,6 @@
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
-import { Spinner } from '@/components/ui';
+import { Navigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { Spinner } from "@/components/ui";
 
 /**
  * Public Route Component
@@ -23,19 +23,19 @@ const PublicRoute = ({ children }) => {
   // Redirect to dashboard if already authenticated
   if (user) {
     console.log(
-      '%c[ROUTE] Already authenticated, redirecting to dashboard',
-      'color: #22c55e; font-weight: bold'
+      "%c[ROUTE] Already authenticated, redirecting to dashboard",
+      "color: #22c55e; font-weight: bold",
     );
-    
+
     const roleRoutes = {
-      STUDENT: '/student/dashboard',
-      ORGANIZER: '/organizer/dashboard',
-      FACULTY: '/faculty/dashboard',
-      ADMIN: '/admin/dashboard',
-      SUPER_ADMIN: '/super-admin/dashboard',
+      STUDENT: "/student/dashboard",
+      ORGANIZER: "/organizer/dashboard",
+      FACULTY: "/faculty/dashboard",
+      ADMIN: "/admin/dashboard",
+      SUPER_ADMIN: "/super-admin/dashboard",
     };
-    
-    const defaultRoute = roleRoutes[user.role] || '/student/dashboard';
+
+    const defaultRoute = roleRoutes[user.role] || "/student/dashboard";
     return <Navigate to={defaultRoute} replace />;
   }
 
