@@ -25,6 +25,7 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import ApprovalTimeline from "@/components/events/ApprovalTimeline";
 import approvalService from "@/services/approvalService";
+import emailService from "@/services/emailService";
 import { formatDate, formatDateRange } from "@/utils/dateUtils";
 
 /**
@@ -132,6 +133,19 @@ const EventApprovalPage = () => {
         "%c[SUCCESS] Event approved",
         "color: #22c55e; font-weight: bold",
       );
+
+      // Send approval notification email
+      try {
+        await emailService.sendApprovalEmail(eventId, "APPROVED");
+        console.log(
+          "%c[EMAIL] Approval notification sent",
+          "color: #22c55e; font-weight: bold",
+        );
+      } catch (emailErr) {
+        console.warn("[EMAIL] Failed to send approval email:", emailErr);
+        // Don't fail approval if email fails
+      }
+
       setApproveDialogOpen(false);
       navigate("/faculty/approvals", {
         state: {
@@ -174,6 +188,19 @@ const EventApprovalPage = () => {
         "%c[SUCCESS] Event rejected",
         "color: #22c55e; font-weight: bold",
       );
+
+      // Send rejection notification email
+      try {
+        await emailService.sendApprovalEmail(eventId, "REJECTED");
+        console.log(
+          "%c[EMAIL] Rejection notification sent",
+          "color: #22c55e; font-weight: bold",
+        );
+      } catch (emailErr) {
+        console.warn("[EMAIL] Failed to send rejection email:", emailErr);
+        // Don't fail rejection if email fails
+      }
+
       setRejectDialogOpen(false);
       navigate("/faculty/approvals", {
         state: { message: "Event rejected. The organizer has been notified." },

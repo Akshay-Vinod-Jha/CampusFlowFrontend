@@ -22,9 +22,11 @@ import {
   AlertCircle,
   Plus,
   QrCode,
+  Mail,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import ApprovalTimeline from "@/components/events/ApprovalTimeline";
+import { SendEmailDialog } from "@/components/email";
 import eventService from "@/services/eventService";
 import { formatDate, formatDateRange, isPastDate } from "@/utils/dateUtils";
 
@@ -41,6 +43,7 @@ const MyCreatedEventsPage = () => {
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("all"); // all, draft, pending, approved, rejected
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [deleting, setDeleting] = useState(false);
   const [timelineDialogOpen, setTimelineDialogOpen] = useState(false);
@@ -213,6 +216,11 @@ const MyCreatedEventsPage = () => {
   const openTimelineDialog = (event) => {
     setSelectedEvent(event);
     setTimelineDialogOpen(true);
+  };
+
+  const openEmailDialog = (event) => {
+    setSelectedEvent(event);
+    setEmailDialogOpen(true);
   };
 
   const getCategoryVariant = (category) => {
@@ -587,6 +595,14 @@ const MyCreatedEventsPage = () => {
                                   Track Attendance
                                 </Button>
                               </Link>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => openEmailDialog(event)}
+                              >
+                                <Mail className="w-4 h-4" />
+                                Send Email
+                              </Button>
                             </>
                           )}
                           {event.status === "REJECTED" && (
@@ -684,6 +700,16 @@ const MyCreatedEventsPage = () => {
           </Dialog.Footer>
         </Dialog.Content>
       </Dialog>
+
+      {/* Send Email Dialog */}
+      {selectedEvent && (
+        <SendEmailDialog
+          open={emailDialogOpen}
+          onClose={() => setEmailDialogOpen(false)}
+          eventId={selectedEvent._id}
+          eventTitle={selectedEvent.title}
+        />
+      )}
     </div>
   );
 };

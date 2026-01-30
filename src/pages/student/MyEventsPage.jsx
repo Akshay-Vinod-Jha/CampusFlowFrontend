@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import eventService from "@/services/eventService";
+import emailService from "@/services/emailService";
 import {
   formatDate,
   formatDateRange,
@@ -188,13 +189,28 @@ const MyEventsPage = () => {
       // Remove from list
       setEvents(events.filter((e) => e._id !== selectedEvent._id));
 
-      setCancelDialogOpen(false);
-      setSelectedEvent(null);
-
       console.log(
         "%c[STATE] Registration cancelled",
         "color: #22c55e; font-weight: bold",
       );
+
+      // Send cancellation notification email
+      try {
+        await emailService.sendCancellationEmail(
+          selectedEvent._id,
+          "Cancelled by student",
+        );
+        console.log(
+          "%c[EMAIL] Cancellation notification sent",
+          "color: #22c55e; font-weight: bold",
+        );
+      } catch (emailErr) {
+        console.warn("[EMAIL] Failed to send cancellation email:", emailErr);
+        // Don't fail cancellation if email fails
+      }
+
+      setCancelDialogOpen(false);
+      setSelectedEvent(null);
     } catch (err) {
       console.error(
         "%c[ERROR] Cancellation failed",

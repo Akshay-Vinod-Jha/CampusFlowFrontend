@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import eventService from "@/services/eventService";
+import emailService from "@/services/emailService";
 import { formatDate, formatDateRange, isPastDate } from "@/utils/dateUtils";
 
 /**
@@ -145,6 +146,10 @@ const EventDetailsPage = () => {
       // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
+      // Simulate registration response
+      const mockRegistrationId =
+        "reg_" + Math.random().toString(36).substr(2, 9);
+
       setIsRegistered(true);
       setRegisterDialogOpen(false);
       setSuccessDialogOpen(true);
@@ -153,6 +158,18 @@ const EventDetailsPage = () => {
         "%c[STATE] Registration successful",
         "color: #22c55e; font-weight: bold",
       );
+
+      // Send registration confirmation email
+      try {
+        await emailService.sendRegistrationEmail(mockRegistrationId);
+        console.log(
+          "%c[EMAIL] Registration confirmation sent",
+          "color: #22c55e; font-weight: bold",
+        );
+      } catch (emailErr) {
+        console.warn("[EMAIL] Failed to send confirmation email:", emailErr);
+        // Don't fail registration if email fails
+      }
     } catch (err) {
       console.error(
         "%c[ERROR] Registration failed",
