@@ -1,16 +1,110 @@
-# React + Vite
+# CampusFlow Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Enterprise-grade Multi-tenant SaaS Platform for Event Management & Approvals**
 
-Currently, two official plugins are available:
+## 🎯 Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+CampusFlow is a comprehensive event management system designed for universities and colleges. This frontend application provides role-based dashboards, structured approval workflows, QR-based attendance, and real-time analytics.
 
-## React Compiler
+### Core Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🔐 **Multi-tenant Architecture** - Single app serving multiple colleges
+- 👥 **Role-Based Access Control** - 5 distinct user roles (Student, Organizer, Faculty, Admin, Super Admin)
+- 📋 **Event Approval Workflow** - Structured multi-level approval process
+- 📱 **QR Code Attendance** - Contactless event check-ins
+- 📊 **Real-time Analytics** - Event insights and attendance metrics
+- ✉️ **Email Notifications** - Automated status updates and reminders
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+### Core Framework
+
+- **React 18** - Modern UI library with hooks
+- **JavaScript (ES6+)** - Modern JavaScript features
+- **Vite** - Lightning-fast build tool
+
+### Styling & UI
+
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - Professional component library (Radix UI primitives)
+- **Design System**:
+  - Primary: Indigo/Blue palette
+  - Typography: Inter / SF Pro
+  - Spacing: 8px base unit
+  - Theme: Light mode with soft shadows
+
+### State & Data
+
+- **React Router** - Client-side routing
+- **Axios** - HTTP client for API calls
+- **React Context** - Global state management (Auth, Theme)
+
+### Features
+
+- **Recharts** - Data visualization
+- **react-qr-code** - Event registration QR codes
+- **EmailJS** - Client-side email notifications
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ (LTS)
+- npm or yarn
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+Application runs on `http://localhost:5173`
+
+---
+
+## 📁 Project Structure
+
+```
+frontend/
+├── src/
+│   ├── components/          # Reusable UI components
+│   ├── layouts/            # Page layouts
+│   ├── pages/              # Route pages
+│   ├── services/           # API service layer
+│   ├── hooks/              # Custom React hooks
+│   ├── context/            # React Context providers
+│   └── utils/              # Helper functions
+├── public/                 # Static assets
+└── package.json
+```
+
+---
+
+## 🎨 Design System
+
+### Color Palette
+
+- Primary: Indigo (#4F46E5)
+- Secondary: Blue (#3B82F6)
+- Success: Green (#10B981)
+- Warning: Amber (#F59E0B)
+- Danger: Red (#EF4444)
+
+### Spacing Scale (8px base)
+
+- xs: 8px, sm: 16px, md: 24px, lg: 32px, xl: 48px
+
+---
+
+**Built with ❤️ for Educational Institutions**
