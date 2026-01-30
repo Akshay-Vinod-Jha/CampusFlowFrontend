@@ -1,22 +1,25 @@
-import { FileX } from 'lucide-react';
-import Button from './Button';
+import { FileX } from "lucide-react";
+import Button from "./Button";
 
 /**
  * Professional Empty State Component
  * For displaying when no data is available
  */
 
-const EmptyState = ({ 
+const EmptyState = ({
   icon: Icon = FileX,
-  title = 'No data found',
+  title = "No data found",
   description,
   action,
   actionLabel,
-  className = '',
-  ...props 
+  className = "",
+  ...props
 }) => {
   return (
-    <div className={`empty-state flex flex-col items-center justify-center py-12 px-4 text-center ${className}`} {...props}>
+    <div
+      className={`empty-state flex flex-col items-center justify-center py-12 px-4 text-center ${className}`}
+      {...props}
+    >
       <div className="empty-state-icon w-16 h-16 mb-4 text-neutral-400">
         <Icon className="w-full h-full" />
       </div>

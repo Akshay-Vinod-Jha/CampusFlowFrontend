@@ -3,22 +3,22 @@
  * For content loading states
  */
 
-const Skeleton = ({ 
-  className = '',
+const Skeleton = ({
+  className = "",
   width,
   height,
   circle = false,
-  ...props 
+  ...props
 }) => {
-  const baseStyles = 'skeleton animate-pulse bg-neutral-200 rounded';
-  const shapeStyles = circle ? 'rounded-full' : '';
-  
+  const baseStyles = "skeleton animate-pulse bg-neutral-200 rounded";
+  const shapeStyles = circle ? "rounded-full" : "";
+
   const inlineStyles = {};
   if (width) inlineStyles.width = width;
   if (height) inlineStyles.height = height;
 
   return (
-    <div 
+    <div
       className={`${baseStyles} ${shapeStyles} ${className}`}
       style={inlineStyles}
       {...props}
@@ -42,21 +42,21 @@ const SkeletonCard = () => (
 const SkeletonText = ({ lines = 3 }) => (
   <div className="space-y-2">
     {Array.from({ length: lines }).map((_, i) => (
-      <Skeleton 
-        key={i} 
-        height="16px" 
-        width={i === lines - 1 ? '70%' : '100%'} 
+      <Skeleton
+        key={i}
+        height="16px"
+        width={i === lines - 1 ? "70%" : "100%"}
       />
     ))}
   </div>
 );
 
-const SkeletonAvatar = ({ size = 'md' }) => {
+const SkeletonAvatar = ({ size = "md" }) => {
   const sizes = {
-    sm: 'w-8 h-8',
-    md: 'w-10 h-10',
-    lg: 'w-12 h-12',
-    xl: 'w-16 h-16',
+    sm: "w-8 h-8",
+    md: "w-10 h-10",
+    lg: "w-12 h-12",
+    xl: "w-16 h-16",
   };
 
   return <Skeleton className={sizes[size]} circle />;

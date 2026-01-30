@@ -1,5 +1,11 @@
-import { createContext, useContext, useState, useCallback } from 'react';
-import { CheckCircle2, AlertCircle, Info, AlertTriangle, X } from 'lucide-react';
+import { createContext, useContext, useState, useCallback } from "react";
+import {
+  CheckCircle2,
+  AlertCircle,
+  Info,
+  AlertTriangle,
+  X,
+} from "lucide-react";
 
 /**
  * Professional Toast Notification System
@@ -17,16 +23,16 @@ const toastIcons = {
 };
 
 const toastStyles = {
-  success: 'toast-success',
-  error: 'toast-error',
-  warning: 'toast-warning',
-  info: 'toast-info',
+  success: "toast-success",
+  error: "toast-error",
+  warning: "toast-warning",
+  info: "toast-info",
 };
 
 export const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
 
-  const addToast = useCallback((message, type = 'info', duration = 3000) => {
+  const addToast = useCallback((message, type = "info", duration = 3000) => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message, type }]);
 
@@ -36,7 +42,10 @@ export const ToastProvider = ({ children }) => {
       }, duration);
     }
 
-    console.log(`%c[TOAST] ${type.toUpperCase()}: ${message}`, `color: ${type === 'success' ? '#22c55e' : type === 'error' ? '#ef4444' : '#3b82f6'}; font-weight: bold`);
+    console.log(
+      `%c[TOAST] ${type.toUpperCase()}: ${message}`,
+      `color: ${type === "success" ? "#22c55e" : type === "error" ? "#ef4444" : "#3b82f6"}; font-weight: bold`,
+    );
 
     return id;
   }, []);
@@ -46,10 +55,10 @@ export const ToastProvider = ({ children }) => {
   }, []);
 
   const toast = {
-    success: (message, duration) => addToast(message, 'success', duration),
-    error: (message, duration) => addToast(message, 'error', duration),
-    warning: (message, duration) => addToast(message, 'warning', duration),
-    info: (message, duration) => addToast(message, 'info', duration),
+    success: (message, duration) => addToast(message, "success", duration),
+    error: (message, duration) => addToast(message, "error", duration),
+    warning: (message, duration) => addToast(message, "warning", duration),
+    info: (message, duration) => addToast(message, "info", duration),
   };
 
   return (
@@ -87,7 +96,7 @@ export const ToastProvider = ({ children }) => {
 export const useToast = () => {
   const context = useContext(ToastContext);
   if (!context) {
-    throw new Error('useToast must be used within ToastProvider');
+    throw new Error("useToast must be used within ToastProvider");
   }
   return context;
 };

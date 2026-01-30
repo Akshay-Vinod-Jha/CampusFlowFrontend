@@ -1,5 +1,5 @@
-import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { X } from 'lucide-react';
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { X } from "lucide-react";
 
 /**
  * Professional Dialog Component using Radix UI
@@ -11,18 +11,18 @@ const DialogTrigger = DialogPrimitive.Trigger;
 const DialogPortal = DialogPrimitive.Portal;
 const DialogClose = DialogPrimitive.Close;
 
-const DialogOverlay = ({ className = '', ...props }) => (
+const DialogOverlay = ({ className = "", ...props }) => (
   <DialogPrimitive.Overlay
     className={`dialog-overlay fixed inset-0 bg-black/50 backdrop-blur-sm animate-fade-in ${className}`}
     {...props}
   />
 );
 
-const DialogContent = ({ 
-  children, 
-  className = '',
+const DialogContent = ({
+  children,
+  className = "",
   showClose = true,
-  ...props 
+  ...props
 }) => (
   <DialogPortal>
     <DialogOverlay />
@@ -41,13 +41,13 @@ const DialogContent = ({
   </DialogPortal>
 );
 
-const DialogHeader = ({ children, className = '', ...props }) => (
+const DialogHeader = ({ children, className = "", ...props }) => (
   <div className={`mb-4 ${className}`} {...props}>
     {children}
   </div>
 );
 
-const DialogTitle = ({ children, className = '', ...props }) => (
+const DialogTitle = ({ children, className = "", ...props }) => (
   <DialogPrimitive.Title
     className={`text-xl font-semibold text-neutral-900 ${className}`}
     {...props}
@@ -56,7 +56,7 @@ const DialogTitle = ({ children, className = '', ...props }) => (
   </DialogPrimitive.Title>
 );
 
-const DialogDescription = ({ children, className = '', ...props }) => (
+const DialogDescription = ({ children, className = "", ...props }) => (
   <DialogPrimitive.Description
     className={`text-sm text-neutral-600 mt-2 ${className}`}
     {...props}
@@ -65,8 +65,11 @@ const DialogDescription = ({ children, className = '', ...props }) => (
   </DialogPrimitive.Description>
 );
 
-const DialogFooter = ({ children, className = '', ...props }) => (
-  <div className={`mt-6 flex items-center justify-end gap-3 ${className}`} {...props}>
+const DialogFooter = ({ children, className = "", ...props }) => (
+  <div
+    className={`mt-6 flex items-center justify-end gap-3 ${className}`}
+    {...props}
+  >
     {children}
   </div>
 );
