@@ -118,7 +118,9 @@ const OrganizerDashboard = () => {
             <Card.Title>Quick Actions</Card.Title>
             <Card.Description>Manage events</Card.Description>
           </Card.Header>
-          <CardLink to="/organizer/create-event" className="block">
+          <Card.Content>
+            <div className="space-y-3">
+              <Link to="/organizer/create-event" className="block">
                 <Button variant="primary" className="w-full justify-start">
                   <Plus className="w-4 h-4" />
                   Create New Event
@@ -135,9 +137,7 @@ const OrganizerDashboard = () => {
                   <Clock className="w-4 h-4" />
                   Pending Approvals
                 </Button>
-              </Link className="w-4 h-4" />
-                Pending Approvals
-              </Button>
+              </Link>
             </div>
           </Card.Content>
         </Card>
