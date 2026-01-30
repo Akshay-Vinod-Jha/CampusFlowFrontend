@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Card, Button, Badge } from "@/components/ui";
 import {
@@ -100,11 +101,17 @@ const FacultyDashboard = () => {
             <Card.Description>Events waiting for your review</Card.Description>
           </Card.Header>
           <Card.Content>
-            <div className="text-center py-12 text-neutral-500">
+            <div className="text-center py-8 text-neutral-500">
               <CheckSquare className="w-12 h-12 mx-auto mb-3 text-neutral-300" />
-              <p className="text-sm">
-                Approval interface will be implemented in Task 18
+              <p className="text-sm mb-4">
+                You have pending approvals to review
               </p>
+              <Link to="/faculty/approvals">
+                <Button variant="primary">
+                  <CheckSquare className="w-4 h-4" />
+                  Review Now
+                </Button>
+              </Link>
             </div>
           </Card.Content>
         </Card>
@@ -117,18 +124,24 @@ const FacultyDashboard = () => {
           </Card.Header>
           <Card.Content>
             <div className="space-y-3">
-              <Button variant="primary" className="w-full justify-start">
-                <CheckSquare className="w-4 h-4" />
-                Review Pending
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <CheckCircle className="w-4 h-4" />
-                Approved Events
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <Calendar className="w-4 h-4" />
-                All Events
-              </Button>
+              <Link to="/faculty/approvals" className="block">
+                <Button variant="primary" className="w-full justify-start">
+                  <CheckSquare className="w-4 h-4" />
+                  Review Pending
+                </Button>
+              </Link>
+              <Link to="/faculty/history?status=approved" className="block">
+                <Button variant="outline" className="w-full justify-start">
+                  <CheckCircle className="w-4 h-4" />
+                  Approved Events
+                </Button>
+              </Link>
+              <Link to="/student/events" className="block">
+                <Button variant="outline" className="w-full justify-start">
+                  <Calendar className="w-4 h-4" />
+                  Browse All Events
+                </Button>
+              </Link>
             </div>
           </Card.Content>
         </Card>

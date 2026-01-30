@@ -23,7 +23,11 @@ import {
 } from "@/pages/organizer";
 
 // Faculty Pages
-import FacultyDashboard from "@/pages/faculty/FacultyDashboard";
+import {
+  FacultyDashboard,
+  PendingApprovalsPage,
+  EventApprovalPage,
+} from "@/pages/faculty";
 
 // Admin Pages
 import AdminDashboard from "@/pages/admin/AdminDashboard";
@@ -114,6 +118,11 @@ function App() {
               }
             >
               <Route path="dashboard" element={<FacultyDashboard />} />
+              <Route path="approvals" element={<PendingApprovalsPage />} />
+              <Route
+                path="approvals/:eventId"
+                element={<EventApprovalPage />}
+              />
               <Route
                 path="*"
                 element={<Navigate to="/faculty/dashboard" replace />}
