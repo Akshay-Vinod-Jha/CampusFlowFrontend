@@ -6,15 +6,15 @@
 const isDev = import.meta.env.DEV;
 
 const styles = {
-  auth: 'color: #22c55e; font-weight: bold',
-  api: 'color: #3b82f6; font-weight: bold',
-  route: 'color: #8b5cf6; font-weight: bold',
-  form: 'color: #f59e0b; font-weight: bold',
-  state: 'color: #06b6d4; font-weight: bold',
-  error: 'color: #ef4444; font-weight: bold',
-  success: 'color: #22c55e; font-weight: bold',
-  warn: 'color: #f59e0b; font-weight: bold',
-  info: 'color: #3b82f6; font-weight: bold',
+  auth: "color: #22c55e; font-weight: bold",
+  api: "color: #3b82f6; font-weight: bold",
+  route: "color: #8b5cf6; font-weight: bold",
+  form: "color: #f59e0b; font-weight: bold",
+  state: "color: #06b6d4; font-weight: bold",
+  error: "color: #ef4444; font-weight: bold",
+  success: "color: #22c55e; font-weight: bold",
+  warn: "color: #f59e0b; font-weight: bold",
+  info: "color: #3b82f6; font-weight: bold",
 };
 
 class Logger {
@@ -27,7 +27,7 @@ class Logger {
    */
   auth(message, data = null) {
     if (!this.enabled) return;
-    console.log(`%c[AUTH] ${message}`, styles.auth, data || '');
+    console.log(`%c[AUTH] ${message}`, styles.auth, data || "");
   }
 
   /**
@@ -35,7 +35,7 @@ class Logger {
    */
   api(message, data = null) {
     if (!this.enabled) return;
-    console.log(`%c[API] ${message}`, styles.api, data || '');
+    console.log(`%c[API] ${message}`, styles.api, data || "");
   }
 
   /**
@@ -43,7 +43,7 @@ class Logger {
    */
   route(message, data = null) {
     if (!this.enabled) return;
-    console.log(`%c[ROUTE] ${message}`, styles.route, data || '');
+    console.log(`%c[ROUTE] ${message}`, styles.route, data || "");
   }
 
   /**
@@ -51,7 +51,7 @@ class Logger {
    */
   form(message, data = null) {
     if (!this.enabled) return;
-    console.log(`%c[FORM] ${message}`, styles.form, data || '');
+    console.log(`%c[FORM] ${message}`, styles.form, data || "");
   }
 
   /**
@@ -59,7 +59,7 @@ class Logger {
    */
   state(message, data = null) {
     if (!this.enabled) return;
-    console.log(`%c[STATE] ${message}`, styles.state, data || '');
+    console.log(`%c[STATE] ${message}`, styles.state, data || "");
   }
 
   /**
@@ -67,7 +67,7 @@ class Logger {
    */
   success(message, data = null) {
     if (!this.enabled) return;
-    console.log(`%c✓ ${message}`, styles.success, data || '');
+    console.log(`%c✓ ${message}`, styles.success, data || "");
   }
 
   /**
@@ -85,7 +85,7 @@ class Logger {
    */
   warn(message, data = null) {
     if (!this.enabled) return;
-    console.warn(`%c⚠ [WARN] ${message}`, styles.warn, data || '');
+    console.warn(`%c⚠ [WARN] ${message}`, styles.warn, data || "");
   }
 
   /**
@@ -93,7 +93,7 @@ class Logger {
    */
   info(message, data = null) {
     if (!this.enabled) return;
-    console.info(`%cℹ [INFO] ${message}`, styles.info, data || '');
+    console.info(`%cℹ [INFO] ${message}`, styles.info, data || "");
   }
 
   /**
@@ -101,7 +101,7 @@ class Logger {
    */
   group(title, callback) {
     if (!this.enabled) return;
-    console.group(`%c${title}`, 'font-weight: bold; font-size: 14px');
+    console.group(`%c${title}`, "font-weight: bold; font-size: 14px");
     callback();
     console.groupEnd();
   }
@@ -111,7 +111,7 @@ class Logger {
    */
   table(data, title = null) {
     if (!this.enabled) return;
-    if (title) console.log(`%c${title}`, 'font-weight: bold');
+    if (title) console.log(`%c${title}`, "font-weight: bold");
     console.table(data);
   }
 
@@ -138,7 +138,7 @@ export const logApiRequest = (method, url, data = null) => {
 };
 
 export const logApiResponse = (method, url, status, data = null) => {
-  const statusColor = status >= 200 && status < 300 ? '✓' : '✗';
+  const statusColor = status >= 200 && status < 300 ? "✓" : "✗";
   logger.api(`${statusColor} ${method.toUpperCase()} ${url} - ${status}`, data);
 };
 
