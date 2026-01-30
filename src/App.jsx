@@ -30,7 +30,11 @@ import {
 } from "@/pages/faculty";
 
 // Admin Pages
-import AdminDashboard from "@/pages/admin/AdminDashboard";
+import {
+  AdminDashboard,
+  AdminPendingApprovalsPage,
+  AdminEventApprovalPage,
+} from "@/pages/admin";
 
 // Super Admin Pages
 import SuperAdminDashboard from "@/pages/super-admin/SuperAdminDashboard";
@@ -139,6 +143,11 @@ function App() {
               }
             >
               <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="approvals" element={<AdminPendingApprovalsPage />} />
+              <Route
+                path="approvals/:eventId"
+                element={<AdminEventApprovalPage />}
+              />
               <Route
                 path="*"
                 element={<Navigate to="/admin/dashboard" replace />}

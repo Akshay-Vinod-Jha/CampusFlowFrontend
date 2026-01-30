@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Card, Button, Badge } from "@/components/ui";
 import {
@@ -104,12 +105,12 @@ const AdminDashboard = () => {
             </Card.Description>
           </Card.Header>
           <Card.Content>
-            <div className="text-center py-12 text-neutral-500">
+            <div className="text-center py-8 text-neutral-500">
               <BarChart3 className="w-12 h-12 mx-auto mb-3 text-neutral-300" />
-              <p className="text-sm">
-                Analytics charts will be implemented in Task 19
+              <p className="text-sm mb-2">
+                Analytics and reporting coming soon
               </p>
-              <p className="text-xs mt-2">Using Recharts library</p>
+              <p className="text-xs text-neutral-400">Using Recharts library</p>
             </div>
           </Card.Content>
         </Card>
@@ -122,22 +123,30 @@ const AdminDashboard = () => {
           </Card.Header>
           <Card.Content>
             <div className="space-y-3">
-              <Button variant="primary" className="w-full justify-start">
-                <Users className="w-4 h-4" />
-                Manage Users
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <CheckSquare className="w-4 h-4" />
-                Review Approvals
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <BarChart3 className="w-4 h-4" />
-                View Analytics
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <Settings className="w-4 h-4" />
-                System Settings
-              </Button>
+              <Link to="/admin/users" className="block">
+                <Button variant="primary" className="w-full justify-start">
+                  <Users className="w-4 h-4" />
+                  Manage Users
+                </Button>
+              </Link>
+              <Link to="/admin/approvals" className="block">
+                <Button variant="outline" className="w-full justify-start">
+                  <CheckSquare className="w-4 h-4" />
+                  Review Approvals
+                </Button>
+              </Link>
+              <Link to="/admin/analytics" className="block">
+                <Button variant="outline" className="w-full justify-start">
+                  <BarChart3 className="w-4 h-4" />
+                  View Analytics
+                </Button>
+              </Link>
+              <Link to="/student/events" className="block">
+                <Button variant="outline" className="w-full justify-start">
+                  <Calendar className="w-4 h-4" />
+                  Browse Events
+                </Button>
+              </Link>
             </div>
           </Card.Content>
         </Card>
