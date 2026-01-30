@@ -22,10 +22,6 @@ const PublicRoute = ({ children }) => {
 
   // Redirect to dashboard if already authenticated
   if (user) {
-    console.log(
-      "%c[ROUTE] Already authenticated, redirecting to dashboard",
-      "color: #22c55e; font-weight: bold",
-    );
 
     const roleRoutes = {
       STUDENT: "/student/dashboard",

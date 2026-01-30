@@ -49,11 +49,7 @@ import NotFoundPage from "@/pages/NotFoundPage";
  */
 
 function App() {
-  console.log(
-    "%c[APP] CampusFlow initialized",
-    "color: #3b82f6; font-weight: bold; font-size: 14px",
-  );
-
+  
   return (
     <BrowserRouter>
       <ToastProvider>

@@ -48,11 +48,6 @@ const AttendanceTrackingPage = () => {
     try {
       setLoading(true);
       setError("");
-      console.log(
-        "%c[PAGE] Fetching event and attendance data",
-        "color: #9333ea; font-weight: bold",
-        eventId,
-      );
 
       // Fetch event details
       const eventResponse = await eventService.getEventById(eventId);
@@ -77,11 +72,6 @@ const AttendanceTrackingPage = () => {
         attendanceRate: attendanceRate.toFixed(1),
       });
 
-      console.log(
-        "%c[STATE] Event and attendance loaded",
-        "color: #22c55e; font-weight: bold",
-        { registered, attended },
-      );
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch data",
@@ -98,11 +88,6 @@ const AttendanceTrackingPage = () => {
     try {
       setMarking(true);
       setError("");
-      console.log(
-        "%c[ACTION] Processing scanned QR code",
-        "color: #3b82f6; font-weight: bold",
-        qrData,
-      );
 
       // Validate QR code
       const validationResponse = await attendanceService.validateQRCode(
@@ -140,12 +125,6 @@ const AttendanceTrackingPage = () => {
       setSuccessMessage("Attendance marked successfully");
       setScannerOpen(false);
 
-      console.log(
-        "%c[STATE] Attendance marked",
-        "color: #22c55e; font-weight: bold",
-        response.data,
-      );
-
       // Clear success message after 5 seconds
       setTimeout(() => setSuccessMessage(""), 5000);
     } catch (err) {
@@ -172,10 +151,6 @@ const AttendanceTrackingPage = () => {
 
   const handleExportAttendance = async () => {
     try {
-      console.log(
-        "%c[ACTION] Exporting attendance list",
-        "color: #3b82f6; font-weight: bold",
-      );
 
       const blob = await attendanceService.exportAttendance(eventId);
 
@@ -189,10 +164,6 @@ const AttendanceTrackingPage = () => {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
 
-      console.log(
-        "%c[STATE] Attendance list exported",
-        "color: #22c55e; font-weight: bold",
-      );
     } catch (err) {
       console.error(
         "%c[ERROR] Export failed",

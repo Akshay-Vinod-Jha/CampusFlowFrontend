@@ -42,11 +42,6 @@ export const ToastProvider = ({ children }) => {
       }, duration);
     }
 
-    console.log(
-      `%c[TOAST] ${type.toUpperCase()}: ${message}`,
-      `color: ${type === "success" ? "#22c55e" : type === "error" ? "#ef4444" : "#3b82f6"}; font-weight: bold`,
-    );
-
     return id;
   }, []);
 

@@ -23,19 +23,12 @@ const ProtectedRoute = ({ children, roles = [] }) => {
 
   // Redirect to login if not authenticated
   if (!user) {
-    console.log(
-      "%c[ROUTE] Not authenticated, redirecting to login",
-      "color: #f59e0b; font-weight: bold",
-    );
+    
     return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
 
   // Check role authorization if roles specified
   if (roles.length > 0 && !hasRole(roles)) {
-    console.log(
-      "%c[ROUTE] Insufficient permissions, redirecting to dashboard",
-      "color: #ef4444; font-weight: bold",
-    );
 
     // Redirect to user's appropriate dashboard
     const roleRoutes = {

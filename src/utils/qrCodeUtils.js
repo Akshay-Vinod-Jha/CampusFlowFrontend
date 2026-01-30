@@ -23,11 +23,6 @@ export const generateQRData = (registration) => {
     // Convert to JSON string
     const dataString = JSON.stringify(qrData);
 
-    console.log("[QR Utils] Generated QR data:", {
-      registrationId: registration._id,
-      eventId: registration.eventId,
-    });
-
     return dataString;
   } catch (error) {
     console.error("[QR Utils] Error generating QR data:", error);
@@ -48,11 +43,6 @@ export const parseQRData = (qrDataString) => {
     if (!qrData.registrationId || !qrData.eventId || !qrData.userId) {
       throw new Error("Invalid QR code data: missing required fields");
     }
-
-    console.log("[QR Utils] Parsed QR data:", {
-      registrationId: qrData.registrationId,
-      eventId: qrData.eventId,
-    });
 
     return qrData;
   } catch (error) {
@@ -82,8 +72,6 @@ export const generateQRCodeDataURL = async (data, options = {}) => {
     };
 
     const dataURL = await QRCode.toDataURL(data, defaultOptions);
-
-    console.log("[QR Utils] Generated QR code data URL");
 
     return dataURL;
   } catch (error) {
@@ -117,7 +105,6 @@ export const validateQRData = (qrData) => {
       return false;
     }
 
-    console.log("[QR Utils] QR data validation passed");
     return true;
   } catch (error) {
     console.error("[QR Utils] Validation error:", error);
@@ -139,7 +126,6 @@ export const downloadQRCode = (dataURL, filename = "qr-code.png") => {
     link.click();
     document.body.removeChild(link);
 
-    console.log("[QR Utils] QR code downloaded:", filename);
   } catch (error) {
     console.error("[QR Utils] Error downloading QR code:", error);
     throw new Error("Failed to download QR code");

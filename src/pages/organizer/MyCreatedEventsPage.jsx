@@ -56,10 +56,6 @@ const MyCreatedEventsPage = () => {
     try {
       setLoading(true);
       setError("");
-      console.log(
-        "%c[PAGE] Fetching my created events",
-        "color: #9333ea; font-weight: bold",
-      );
 
       // Mock data (will be replaced with API call)
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -157,11 +153,7 @@ const MyCreatedEventsPage = () => {
       ];
 
       setEvents(mockEvents);
-      console.log(
-        "%c[STATE] Events loaded",
-        "color: #22c55e; font-weight: bold",
-        mockEvents.length,
-      );
+      
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch events",
@@ -179,11 +171,6 @@ const MyCreatedEventsPage = () => {
 
     try {
       setDeleting(true);
-      console.log(
-        "%c[ACTION] Deleting event",
-        "color: #3b82f6; font-weight: bold",
-        selectedEvent._id,
-      );
 
       // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -192,10 +179,6 @@ const MyCreatedEventsPage = () => {
       setDeleteDialogOpen(false);
       setSelectedEvent(null);
 
-      console.log(
-        "%c[STATE] Event deleted",
-        "color: #22c55e; font-weight: bold",
-      );
     } catch (err) {
       console.error(
         "%c[ERROR] Deletion failed",

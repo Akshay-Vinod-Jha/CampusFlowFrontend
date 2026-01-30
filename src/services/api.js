@@ -69,10 +69,7 @@ api.interceptors.response.use(
       switch (status) {
         case 401:
           // Unauthorized - clear auth and redirect to login
-          console.log(
-            "%c[AUTH] Unauthorized - Clearing session",
-            "color: #ef4444; font-weight: bold",
-          );
+
           localStorage.removeItem("authToken");
           localStorage.removeItem("user");
 
@@ -84,44 +81,27 @@ api.interceptors.response.use(
 
         case 403:
           // Forbidden - insufficient permissions
-          console.log(
-            "%c[AUTH] Forbidden - Insufficient permissions",
-            "color: #ef4444; font-weight: bold",
-          );
+
           break;
 
         case 404:
           // Not found
-          console.log(
-            "%c[API] Resource not found",
-            "color: #f59e0b; font-weight: bold",
-          );
+
           break;
 
         case 422:
           // Validation error
-          console.log(
-            "%c[FORM] Validation failed:",
-            "color: #f97316; font-weight: bold",
-            data.errors || data.message,
-          );
+
           break;
 
         case 500:
         case 502:
         case 503:
           // Server error
-          console.log(
-            "%c[ERROR] Server error occurred",
-            "color: #ef4444; font-weight: bold",
-          );
+
           break;
 
         default:
-          console.log(
-            `%c[ERROR] Request failed with status ${status}`,
-            "color: #ef4444; font-weight: bold",
-          );
       }
 
       // Return formatted error
@@ -133,10 +113,6 @@ api.interceptors.response.use(
       });
     } else if (error.request) {
       // Request was made but no response
-      console.log(
-        "%c[ERROR] No response from server (Network error)",
-        "color: #ef4444; font-weight: bold",
-      );
       return Promise.reject({
         status: 0,
         message: "Network error. Please check your connection.",
@@ -144,10 +120,6 @@ api.interceptors.response.use(
       });
     } else {
       // Request setup error
-      console.log(
-        "%c[ERROR] Request setup failed",
-        "color: #ef4444; font-weight: bold",
-      );
       return Promise.reject({
         status: 0,
         message: error.message || "Request failed",

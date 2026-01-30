@@ -15,10 +15,7 @@ const Navbar = ({ user, onLogout, onMenuToggle, notifications = [] }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      console.log(
-        `%c[ROUTE] Searching for: ${searchQuery}`,
-        "color: #9333ea; font-weight: bold",
-      );
+      
       // Handle search logic here
     }
   };

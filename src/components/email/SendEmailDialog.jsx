@@ -26,19 +26,10 @@ const SendEmailDialog = ({ open, onClose, eventId, eventTitle }) => {
     try {
       setSending(true);
       setError("");
-      console.log(
-        "%c[SendEmailDialog] Sending custom email",
-        "color: #3b82f6; font-weight: bold",
-        { eventId, subject },
-      );
 
       await emailService.sendCustomEmail(eventId, subject, message);
 
       setSuccess(true);
-      console.log(
-        "%c[SendEmailDialog] Email sent successfully",
-        "color: #22c55e; font-weight: bold",
-      );
 
       // Reset form after 2 seconds and close
       setTimeout(() => {

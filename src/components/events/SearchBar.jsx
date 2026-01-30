@@ -31,11 +31,7 @@ const SearchBar = ({
     // Set new debounce timer for onSearch
     if (onSearch) {
       const timer = setTimeout(() => {
-        console.log(
-          "%c[SEARCH] Query:",
-          "color: #3b82f6; font-weight: bold",
-          value,
-        );
+        
         onSearch(value);
       }, debounceMs);
       setDebounceTimer(timer);
@@ -46,7 +42,7 @@ const SearchBar = ({
     setSearchTerm("");
     onChange?.("");
     onSearch?.("");
-    console.log("%c[SEARCH] Cleared", "color: #3b82f6; font-weight: bold");
+    
   };
 
   const handleKeyDown = (e) => {

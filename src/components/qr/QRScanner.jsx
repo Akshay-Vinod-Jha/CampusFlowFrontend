@@ -34,7 +34,7 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
 
   const startCamera = async () => {
     try {
-      console.log("[QRScanner] Starting camera");
+      
       setError(null);
 
       // Check if mediaDevices is supported
@@ -56,7 +56,7 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         videoRef.current.play();
-        console.log("[QRScanner] Camera started successfully");
+        
       }
 
       // Start scanning loop
@@ -71,7 +71,6 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
 
   const stopCamera = () => {
     try {
-      console.log("[QRScanner] Stopping camera");
 
       // Stop scanning loop
       if (scanIntervalRef.current) {
@@ -97,7 +96,7 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
   const startScanningLoop = () => {
     // For now, we'll use a manual scan button approach
     // In a real implementation, you would use a library like jsQR to continuously scan frames
-    console.log("[QRScanner] Ready to scan QR codes");
+    
   };
 
   const handleManualInput = () => {
@@ -110,7 +109,6 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
 
   const processScanResult = (qrDataString) => {
     try {
-      console.log("[QRScanner] Processing QR code");
 
       // Parse QR data
       const qrData = parseQRData(qrDataString);
@@ -126,8 +124,6 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
         data: qrData,
         timestamp: new Date().toISOString(),
       });
-
-      console.log("[QRScanner] QR code scanned successfully:", qrData);
 
       // Notify parent component
       onScan?.(qrData);

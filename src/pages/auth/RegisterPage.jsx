@@ -58,12 +58,6 @@ const RegisterPage = () => {
     if (apiError) {
       setApiError("");
     }
-
-    console.log(
-      "%c[FORM] Field updated:",
-      "color: #f97316; font-weight: bold",
-      { name, value },
-    );
   };
 
   // Validate form
@@ -106,15 +100,6 @@ const RegisterPage = () => {
       newErrors.department = "Department is required";
     }
 
-    console.log(
-      "%c[FORM] Validation result:",
-      "color: #f97316; font-weight: bold",
-      {
-        valid: Object.keys(newErrors).length === 0,
-        errors: newErrors,
-      },
-    );
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -123,17 +108,8 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(
-      "%c[FORM] Registration form submitted",
-      "color: #f97316; font-weight: bold",
-    );
-
     // Validate form
     if (!validateForm()) {
-      console.log(
-        "%c[FORM] Validation failed",
-        "color: #f97316; font-weight: bold",
-      );
       return;
     }
 
@@ -141,22 +117,12 @@ const RegisterPage = () => {
     setApiError("");
 
     try {
-      console.log(
-        "%c[AUTH] Attempting registration...",
-        "color: #22c55e; font-weight: bold",
-      );
-
       // Remove confirmPassword before sending to API
       const { confirmPassword, ...registrationData } = formData;
 
       await register(registrationData);
       // Redirect is handled by AuthContext
     } catch (error) {
-      console.log(
-        "%c[ERROR] Registration failed:",
-        "color: #ef4444; font-weight: bold",
-        error,
-      );
       setApiError(error.message || "Registration failed. Please try again.");
     } finally {
       setLoading(false);

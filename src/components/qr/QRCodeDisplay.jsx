@@ -28,7 +28,7 @@ const QRCodeDisplay = ({
       try {
         const data = generateQRData(registration);
         setQrData(data);
-        console.log("[QRCodeDisplay] QR code data generated");
+        
       } catch (error) {
         console.error("[QRCodeDisplay] Error generating QR data:", error);
       }
@@ -38,13 +38,11 @@ const QRCodeDisplay = ({
   const handleDownload = async () => {
     try {
       setIsGenerating(true);
-      console.log("[QRCodeDisplay] Generating QR code for download");
 
       const dataURL = await generateQRCodeDataURL(qrData, { width: 512 });
       const filename = `event-${event?.title?.replace(/\s+/g, "-") || "registration"}-qr.png`;
       downloadQRCode(dataURL, filename);
 
-      console.log("[QRCodeDisplay] QR code downloaded successfully");
     } catch (error) {
       console.error("[QRCodeDisplay] Download failed:", error);
     } finally {
@@ -54,7 +52,6 @@ const QRCodeDisplay = ({
 
   const handlePrint = () => {
     try {
-      console.log("[QRCodeDisplay] Printing QR code");
 
       // Create a new window for printing
       const printWindow = window.open("", "_blank");

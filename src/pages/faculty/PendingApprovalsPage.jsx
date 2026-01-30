@@ -47,10 +47,6 @@ const PendingApprovalsPage = () => {
     try {
       setLoading(true);
       setError("");
-      console.log(
-        "%c[PAGE] Fetching pending approvals",
-        "color: #9333ea; font-weight: bold",
-      );
 
       // Mock data (will be replaced with API call)
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -153,11 +149,7 @@ const PendingApprovalsPage = () => {
       ];
 
       setEvents(mockEvents);
-      console.log(
-        "%c[STATE] Events loaded",
-        "color: #22c55e; font-weight: bold",
-        mockEvents.length,
-      );
+      
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch events",

@@ -23,11 +23,6 @@ const EmailPreview = ({ templateType, data, onClose }) => {
     try {
       setLoading(true);
       setError("");
-      console.log(
-        "%c[EmailPreview] Loading template preview",
-        "color: #9333ea; font-weight: bold",
-        templateType,
-      );
 
       const response = await emailService.previewEmailTemplate(
         templateType,
@@ -35,10 +30,6 @@ const EmailPreview = ({ templateType, data, onClose }) => {
       );
       setPreview(response.data);
 
-      console.log(
-        "%c[EmailPreview] Preview loaded",
-        "color: #22c55e; font-weight: bold",
-      );
     } catch (err) {
       console.error(
         "%c[EmailPreview] Preview error",

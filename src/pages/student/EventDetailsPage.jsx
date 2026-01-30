@@ -45,11 +45,6 @@ const EventDetailsPage = () => {
     try {
       setLoading(true);
       setError("");
-      console.log(
-        "%c[PAGE] Fetching event details",
-        "color: #9333ea; font-weight: bold",
-        eventId,
-      );
 
       // Mock data (will be replaced with API call)
       await new Promise((resolve) => setTimeout(resolve, 800));
@@ -117,11 +112,6 @@ const EventDetailsPage = () => {
       // Mock registration status check
       setIsRegistered(Math.random() > 0.5); // Random for demo
 
-      console.log(
-        "%c[STATE] Event loaded",
-        "color: #22c55e; font-weight: bold",
-        mockEvent,
-      );
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch event",
@@ -137,11 +127,6 @@ const EventDetailsPage = () => {
   const handleRegister = async () => {
     try {
       setRegistering(true);
-      console.log(
-        "%c[ACTION] Registering for event",
-        "color: #3b82f6; font-weight: bold",
-        eventId,
-      );
 
       // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -154,18 +139,10 @@ const EventDetailsPage = () => {
       setRegisterDialogOpen(false);
       setSuccessDialogOpen(true);
 
-      console.log(
-        "%c[STATE] Registration successful",
-        "color: #22c55e; font-weight: bold",
-      );
-
       // Send registration confirmation email
       try {
         await emailService.sendRegistrationEmail(mockRegistrationId);
-        console.log(
-          "%c[EMAIL] Registration confirmation sent",
-          "color: #22c55e; font-weight: bold",
-        );
+        
       } catch (emailErr) {
         console.warn("[EMAIL] Failed to send confirmation email:", emailErr);
         // Don't fail registration if email fails

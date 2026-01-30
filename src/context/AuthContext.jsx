@@ -18,10 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   // Initialize auth state on mount
   useEffect(() => {
-    console.log(
-      "%c[AUTH] Initializing auth context",
-      "color: #22c55e; font-weight: bold",
-    );
+    
     initializeAuth();
   }, []);
 
@@ -34,42 +31,24 @@ export const AuthProvider = ({ children }) => {
       const token = authService.getToken();
 
       if (currentUser && token) {
-        console.log(
-          "%c[AUTH] User found in storage, fetching fresh profile",
-          "color: #22c55e; font-weight: bold",
-        );
 
         // Fetch fresh user data from API to ensure token is still valid
         try {
           const freshUser = await authService.getProfile();
           setUser(freshUser);
-          console.log(
-            "%c✓ [AUTH] Auth initialized with user:",
-            "color: #22c55e; font-weight: bold",
-            freshUser,
-          );
+          
         } catch (error) {
           // Token expired or invalid, clear auth
-          console.log(
-            "%c[AUTH] Token invalid, clearing auth",
-            "color: #f59e0b; font-weight: bold",
-          );
+          
           authService.logout();
           setUser(null);
         }
       } else {
-        console.log(
-          "%c[AUTH] No user found in storage",
-          "color: #22c55e; font-weight: bold",
-        );
+        
         setUser(null);
       }
     } catch (error) {
-      console.log(
-        "%c[ERROR] Auth initialization failed:",
-        "color: #ef4444; font-weight: bold",
-        error,
-      );
+      
       setUser(null);
     } finally {
       setLoading(false);
@@ -82,30 +61,18 @@ export const AuthProvider = ({ children }) => {
    */
   const login = async (credentials) => {
     try {
-      console.log(
-        "%c[AUTH] Logging in...",
-        "color: #22c55e; font-weight: bold",
-      );
+      
       const { user: loggedInUser } = await authService.login(credentials);
 
       setUser(loggedInUser);
       toast.success("Welcome back!");
-
-      console.log(
-        "%c✓ [AUTH] Login successful, user state updated",
-        "color: #22c55e; font-weight: bold",
-      );
 
       // Redirect based on role
       redirectAfterLogin(loggedInUser.role);
 
       return loggedInUser;
     } catch (error) {
-      console.log(
-        "%c[ERROR] Login failed:",
-        "color: #ef4444; font-weight: bold",
-        error,
-      );
+      
       toast.error(
         error.message || "Login failed. Please check your credentials.",
       );
@@ -119,30 +86,18 @@ export const AuthProvider = ({ children }) => {
    */
   const register = async (userData) => {
     try {
-      console.log(
-        "%c[AUTH] Registering new user...",
-        "color: #22c55e; font-weight: bold",
-      );
+      
       const { user: registeredUser } = await authService.register(userData);
 
       setUser(registeredUser);
       toast.success("Registration successful! Welcome to CampusFlow.");
-
-      console.log(
-        "%c✓ [AUTH] Registration successful, user state updated",
-        "color: #22c55e; font-weight: bold",
-      );
 
       // Redirect based on role
       redirectAfterLogin(registeredUser.role);
 
       return registeredUser;
     } catch (error) {
-      console.log(
-        "%c[ERROR] Registration failed:",
-        "color: #ef4444; font-weight: bold",
-        error,
-      );
+      
       toast.error(error.message || "Registration failed. Please try again.");
       throw error;
     }
@@ -152,19 +107,10 @@ export const AuthProvider = ({ children }) => {
    * Logout user
    */
   const logout = () => {
-    console.log(
-      "%c[AUTH] Logging out user",
-      "color: #22c55e; font-weight: bold",
-    );
 
     authService.logout();
     setUser(null);
     toast.info("You have been logged out");
-
-    console.log(
-      "%c✓ [AUTH] Logout successful, user state cleared",
-      "color: #22c55e; font-weight: bold",
-    );
 
     navigate("/auth/login");
   };
@@ -175,27 +121,15 @@ export const AuthProvider = ({ children }) => {
    */
   const updateUser = async (updates) => {
     try {
-      console.log(
-        "%c[AUTH] Updating user profile...",
-        "color: #22c55e; font-weight: bold",
-      );
+      
       const updatedUser = await authService.updateProfile(updates);
 
       setUser(updatedUser);
       toast.success("Profile updated successfully");
 
-      console.log(
-        "%c✓ [AUTH] Profile updated, user state refreshed",
-        "color: #22c55e; font-weight: bold",
-      );
-
       return updatedUser;
     } catch (error) {
-      console.log(
-        "%c[ERROR] Profile update failed:",
-        "color: #ef4444; font-weight: bold",
-        error,
-      );
+      
       toast.error(error.message || "Failed to update profile");
       throw error;
     }
@@ -206,23 +140,13 @@ export const AuthProvider = ({ children }) => {
    */
   const refreshUser = async () => {
     try {
-      console.log(
-        "%c[AUTH] Refreshing user data...",
-        "color: #22c55e; font-weight: bold",
-      );
+      
       const freshUser = await authService.getProfile();
       setUser(freshUser);
-      console.log(
-        "%c✓ [AUTH] User data refreshed",
-        "color: #22c55e; font-weight: bold",
-      );
+      
       return freshUser;
     } catch (error) {
-      console.log(
-        "%c[ERROR] Failed to refresh user:",
-        "color: #ef4444; font-weight: bold",
-        error,
-      );
+      
       throw error;
     }
   };
@@ -241,11 +165,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const route = roleRoutes[role] || "/student/dashboard";
-    console.log(
-      "%c[ROUTE] Redirecting to:",
-      "color: #9333ea; font-weight: bold",
-      route,
-    );
+    
     navigate(route);
   };
 

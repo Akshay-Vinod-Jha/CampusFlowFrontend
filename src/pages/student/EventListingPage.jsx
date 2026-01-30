@@ -62,10 +62,6 @@ const EventListingPage = () => {
     try {
       setLoading(true);
       setError("");
-      console.log(
-        "%c[PAGE] Fetching events...",
-        "color: #9333ea; font-weight: bold",
-      );
 
       // Mock data for now (will be replaced with actual API call)
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API delay
@@ -164,11 +160,7 @@ const EventListingPage = () => {
       ];
 
       setEvents(mockEvents);
-      console.log(
-        "%c[STATE] Events loaded",
-        "color: #22c55e; font-weight: bold",
-        mockEvents.length,
-      );
+      
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch events",

@@ -42,28 +42,19 @@ const AppLayout = () => {
   const [pendingCount] = useState(3);
 
   useEffect(() => {
-    console.log(
-      "%c[ROUTE] AppLayout mounted",
-      "color: #9333ea; font-weight: bold",
-    );
+    
     if (user) {
-      console.log("%c[STATE] User:", "color: #06b6d4; font-weight: bold", user);
+      
     }
   }, [user]);
 
   const handleLogout = () => {
-    console.log(
-      "%c[AUTH] Logout initiated",
-      "color: #22c55e; font-weight: bold",
-    );
+    
     setLogoutDialogOpen(true);
   };
 
   const confirmLogout = () => {
-    console.log(
-      "%c[AUTH] User logged out",
-      "color: #22c55e; font-weight: bold",
-    );
+    
     setLogoutDialogOpen(false);
     logout();
   };

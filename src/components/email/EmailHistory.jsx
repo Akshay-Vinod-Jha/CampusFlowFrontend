@@ -26,20 +26,10 @@ const EmailHistory = ({ eventId, refreshTrigger = 0 }) => {
     try {
       setLoading(true);
       setError("");
-      console.log(
-        "%c[EmailHistory] Fetching email history",
-        "color: #9333ea; font-weight: bold",
-        eventId,
-      );
 
       const response = await emailService.getEmailHistory(eventId);
       setEmails(response.data || []);
 
-      console.log(
-        "%c[EmailHistory] History loaded",
-        "color: #22c55e; font-weight: bold",
-        response.data?.length,
-      );
     } catch (err) {
       console.error(
         "%c[EmailHistory] Fetch error",

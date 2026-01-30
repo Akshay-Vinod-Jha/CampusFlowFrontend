@@ -12,16 +12,11 @@ import apiClient from "./apiClient";
  */
 export const sendRegistrationEmail = async (registrationId) => {
   try {
-    console.log(
-      "[Email Service] Sending registration confirmation:",
-      registrationId,
-    );
 
     const response = await apiClient.post(`/emails/registration-confirmation`, {
       registrationId,
     });
 
-    console.log("[Email Service] Registration email sent:", response.data);
     return response.data;
   } catch (error) {
     console.error("[Email Service] Registration email error:", error);
@@ -37,17 +32,12 @@ export const sendRegistrationEmail = async (registrationId) => {
  */
 export const sendApprovalEmail = async (eventId, status) => {
   try {
-    console.log("[Email Service] Sending approval notification:", {
-      eventId,
-      status,
-    });
 
     const response = await apiClient.post(`/emails/approval-notification`, {
       eventId,
       status,
     });
 
-    console.log("[Email Service] Approval email sent:", response.data);
     return response.data;
   } catch (error) {
     console.error("[Email Service] Approval email error:", error);
@@ -63,17 +53,12 @@ export const sendApprovalEmail = async (eventId, status) => {
  */
 export const sendEventReminder = async (eventId, hoursBefore = 24) => {
   try {
-    console.log("[Email Service] Sending event reminder:", {
-      eventId,
-      hoursBefore,
-    });
 
     const response = await apiClient.post(`/emails/event-reminder`, {
       eventId,
       hoursBefore,
     });
 
-    console.log("[Email Service] Event reminder sent:", response.data);
     return response.data;
   } catch (error) {
     console.error("[Email Service] Event reminder error:", error);
@@ -89,17 +74,12 @@ export const sendEventReminder = async (eventId, hoursBefore = 24) => {
  */
 export const sendCancellationEmail = async (registrationId, reason = "") => {
   try {
-    console.log(
-      "[Email Service] Sending cancellation notification:",
-      registrationId,
-    );
 
     const response = await apiClient.post(`/emails/cancellation-notification`, {
       registrationId,
       reason,
     });
 
-    console.log("[Email Service] Cancellation email sent:", response.data);
     return response.data;
   } catch (error) {
     console.error("[Email Service] Cancellation email error:", error);
@@ -114,13 +94,8 @@ export const sendCancellationEmail = async (registrationId, reason = "") => {
  */
 export const getEmailHistory = async (eventId) => {
   try {
-    console.log("[Email Service] Fetching email history:", eventId);
 
     const response = await apiClient.get(`/emails/history/${eventId}`);
-
-    console.log("[Email Service] Email history fetched:", {
-      count: response.data.data?.length || 0,
-    });
 
     return response.data;
   } catch (error) {
@@ -137,14 +112,12 @@ export const getEmailHistory = async (eventId) => {
  */
 export const previewEmailTemplate = async (templateType, data) => {
   try {
-    console.log("[Email Service] Previewing email template:", templateType);
 
     const response = await apiClient.post(`/emails/preview`, {
       templateType,
       data,
     });
 
-    console.log("[Email Service] Email preview generated");
     return response.data;
   } catch (error) {
     console.error("[Email Service] Email preview error:", error);
@@ -167,7 +140,6 @@ export const sendCustomEmail = async (
   recipients = [],
 ) => {
   try {
-    console.log("[Email Service] Sending custom email:", { eventId, subject });
 
     const response = await apiClient.post(`/emails/custom`, {
       eventId,
@@ -176,7 +148,6 @@ export const sendCustomEmail = async (
       recipients,
     });
 
-    console.log("[Email Service] Custom email sent:", response.data);
     return response.data;
   } catch (error) {
     console.error("[Email Service] Custom email error:", error);
@@ -191,11 +162,9 @@ export const sendCustomEmail = async (
  */
 export const getEmailStats = async (eventId) => {
   try {
-    console.log("[Email Service] Fetching email stats:", eventId);
 
     const response = await apiClient.get(`/emails/stats/${eventId}`);
 
-    console.log("[Email Service] Email stats fetched:", response.data);
     return response.data;
   } catch (error) {
     console.error("[Email Service] Email stats error:", error);

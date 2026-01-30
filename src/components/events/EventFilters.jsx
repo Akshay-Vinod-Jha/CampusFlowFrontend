@@ -48,21 +48,14 @@ const EventFilters = ({
     const newFilters = { ...filters, [filterType]: value };
     setFilters(newFilters);
     onFilterChange?.(newFilters);
-    console.log(
-      "%c[FILTER] Applied filters",
-      "color: #3b82f6; font-weight: bold",
-      newFilters,
-    );
+    
   };
 
   const clearFilters = () => {
     const defaultFilters = { category: "all", type: "all", dateRange: "all" };
     setFilters(defaultFilters);
     onFilterChange?.(defaultFilters);
-    console.log(
-      "%c[FILTER] Cleared all filters",
-      "color: #3b82f6; font-weight: bold",
-    );
+    
   };
 
   const hasActiveFilters =

@@ -13,10 +13,6 @@ import apiClient from "./apiClient";
  */
 export const markAttendance = async (eventId, qrData) => {
   try {
-    console.log("[Attendance Service] Marking attendance:", {
-      eventId,
-      registrationId: qrData.registrationId,
-    });
 
     const response = await apiClient.post(`/events/${eventId}/attendance`, {
       registrationId: qrData.registrationId,
@@ -24,10 +20,6 @@ export const markAttendance = async (eventId, qrData) => {
       qrData,
     });
 
-    console.log(
-      "[Attendance Service] Attendance marked successfully:",
-      response.data,
-    );
     return response.data;
   } catch (error) {
     console.error("[Attendance Service] Mark attendance error:", error);
@@ -42,13 +34,8 @@ export const markAttendance = async (eventId, qrData) => {
  */
 export const getAttendance = async (eventId) => {
   try {
-    console.log("[Attendance Service] Fetching attendance list:", eventId);
 
     const response = await apiClient.get(`/events/${eventId}/attendance`);
-
-    console.log("[Attendance Service] Attendance list fetched:", {
-      count: response.data.data?.length || 0,
-    });
 
     return response.data;
   } catch (error) {
@@ -64,14 +51,9 @@ export const getAttendance = async (eventId) => {
  */
 export const getAttendanceStats = async (eventId) => {
   try {
-    console.log("[Attendance Service] Fetching attendance stats:", eventId);
 
     const response = await apiClient.get(`/events/${eventId}/attendance/stats`);
 
-    console.log(
-      "[Attendance Service] Attendance stats fetched:",
-      response.data,
-    );
     return response.data;
   } catch (error) {
     console.error("[Attendance Service] Get attendance stats error:", error);
@@ -87,10 +69,6 @@ export const getAttendanceStats = async (eventId) => {
  */
 export const validateQRCode = async (eventId, qrData) => {
   try {
-    console.log("[Attendance Service] Validating QR code:", {
-      eventId,
-      registrationId: qrData.registrationId,
-    });
 
     const response = await apiClient.post(
       `/events/${eventId}/attendance/validate`,
@@ -101,7 +79,6 @@ export const validateQRCode = async (eventId, qrData) => {
       },
     );
 
-    console.log("[Attendance Service] QR code validated:", response.data);
     return response.data;
   } catch (error) {
     console.error("[Attendance Service] QR validation error:", error);
@@ -116,7 +93,6 @@ export const validateQRCode = async (eventId, qrData) => {
  */
 export const exportAttendance = async (eventId) => {
   try {
-    console.log("[Attendance Service] Exporting attendance:", eventId);
 
     const response = await apiClient.get(
       `/events/${eventId}/attendance/export`,
@@ -125,7 +101,6 @@ export const exportAttendance = async (eventId) => {
       },
     );
 
-    console.log("[Attendance Service] Attendance exported successfully");
     return response.data;
   } catch (error) {
     console.error("[Attendance Service] Export attendance error:", error);

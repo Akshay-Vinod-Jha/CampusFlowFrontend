@@ -53,11 +53,6 @@ const EventApprovalPage = () => {
     try {
       setLoading(true);
       setError("");
-      console.log(
-        "%c[PAGE] Fetching event for approval",
-        "color: #9333ea; font-weight: bold",
-        eventId,
-      );
 
       // Mock data (will be replaced with API call)
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -99,11 +94,7 @@ const EventApprovalPage = () => {
       };
 
       setEvent(mockEvent);
-      console.log(
-        "%c[STATE] Event loaded",
-        "color: #22c55e; font-weight: bold",
-        mockEvent,
-      );
+      
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch event",
@@ -119,28 +110,14 @@ const EventApprovalPage = () => {
   const handleApprove = async () => {
     try {
       setProcessing(true);
-      console.log(
-        "%c[ACTION] Approving event",
-        "color: #3b82f6; font-weight: bold",
-        eventId,
-        comments,
-      );
 
       // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      console.log(
-        "%c[SUCCESS] Event approved",
-        "color: #22c55e; font-weight: bold",
-      );
-
       // Send approval notification email
       try {
         await emailService.sendApprovalEmail(eventId, "APPROVED");
-        console.log(
-          "%c[EMAIL] Approval notification sent",
-          "color: #22c55e; font-weight: bold",
-        );
+        
       } catch (emailErr) {
         console.warn("[EMAIL] Failed to send approval email:", emailErr);
         // Don't fail approval if email fails
@@ -174,28 +151,14 @@ const EventApprovalPage = () => {
 
     try {
       setProcessing(true);
-      console.log(
-        "%c[ACTION] Rejecting event",
-        "color: #3b82f6; font-weight: bold",
-        eventId,
-        comments,
-      );
 
       // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      console.log(
-        "%c[SUCCESS] Event rejected",
-        "color: #22c55e; font-weight: bold",
-      );
-
       // Send rejection notification email
       try {
         await emailService.sendApprovalEmail(eventId, "REJECTED");
-        console.log(
-          "%c[EMAIL] Rejection notification sent",
-          "color: #22c55e; font-weight: bold",
-        );
+        
       } catch (emailErr) {
         console.warn("[EMAIL] Failed to send rejection email:", emailErr);
         // Don't fail rejection if email fails

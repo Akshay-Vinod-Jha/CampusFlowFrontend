@@ -55,10 +55,6 @@ const MyEventsPage = () => {
     try {
       setLoading(true);
       setError("");
-      console.log(
-        "%c[PAGE] Fetching my registered events",
-        "color: #9333ea; font-weight: bold",
-      );
 
       // Mock data (will be replaced with API call)
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -155,11 +151,7 @@ const MyEventsPage = () => {
       ];
 
       setEvents(mockEvents);
-      console.log(
-        "%c[STATE] My events loaded",
-        "color: #22c55e; font-weight: bold",
-        mockEvents.length,
-      );
+      
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch my events",
@@ -177,11 +169,6 @@ const MyEventsPage = () => {
 
     try {
       setCancelling(true);
-      console.log(
-        "%c[ACTION] Cancelling registration",
-        "color: #3b82f6; font-weight: bold",
-        selectedEvent._id,
-      );
 
       // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -189,21 +176,13 @@ const MyEventsPage = () => {
       // Remove from list
       setEvents(events.filter((e) => e._id !== selectedEvent._id));
 
-      console.log(
-        "%c[STATE] Registration cancelled",
-        "color: #22c55e; font-weight: bold",
-      );
-
       // Send cancellation notification email
       try {
         await emailService.sendCancellationEmail(
           selectedEvent._id,
           "Cancelled by student",
         );
-        console.log(
-          "%c[EMAIL] Cancellation notification sent",
-          "color: #22c55e; font-weight: bold",
-        );
+        
       } catch (emailErr) {
         console.warn("[EMAIL] Failed to send cancellation email:", emailErr);
         // Don't fail cancellation if email fails
@@ -231,11 +210,7 @@ const MyEventsPage = () => {
   const openQRDialog = (event) => {
     setSelectedEvent(event);
     setQrDialogOpen(true);
-    console.log(
-      "%c[ACTION] Opening QR code dialog",
-      "color: #3b82f6; font-weight: bold",
-      event._id,
-    );
+    
   };
 
   const handleDownloadQR = (event) => {

@@ -33,19 +33,11 @@ const ForgotPasswordPage = () => {
     setError("");
 
     try {
-      console.log(
-        "%c[AUTH] Requesting password reset for:",
-        "color: #22c55e; font-weight: bold",
-        email,
-      );
+      
       await authService.forgotPassword(email);
       setSuccess(true);
     } catch (err) {
-      console.log(
-        "%c[ERROR] Password reset request failed:",
-        "color: #ef4444; font-weight: bold",
-        err,
-      );
+      
       setError(err.message || "Failed to send reset email. Please try again.");
     } finally {
       setLoading(false);

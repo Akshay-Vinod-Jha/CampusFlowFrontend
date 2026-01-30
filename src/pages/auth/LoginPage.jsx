@@ -33,12 +33,6 @@ const LoginPage = () => {
     if (apiError) {
       setApiError("");
     }
-
-    console.log(
-      "%c[FORM] Field updated:",
-      "color: #f97316; font-weight: bold",
-      { name, value },
-    );
   };
 
   // Validate form
@@ -59,15 +53,6 @@ const LoginPage = () => {
       newErrors.password = "Password must be at least 6 characters";
     }
 
-    console.log(
-      "%c[FORM] Validation result:",
-      "color: #f97316; font-weight: bold",
-      {
-        valid: Object.keys(newErrors).length === 0,
-        errors: newErrors,
-      },
-    );
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -76,17 +61,8 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(
-      "%c[FORM] Login form submitted",
-      "color: #f97316; font-weight: bold",
-    );
-
     // Validate form
     if (!validateForm()) {
-      console.log(
-        "%c[FORM] Validation failed",
-        "color: #f97316; font-weight: bold",
-      );
       return;
     }
 
@@ -94,18 +70,9 @@ const LoginPage = () => {
     setApiError("");
 
     try {
-      console.log(
-        "%c[AUTH] Attempting login...",
-        "color: #22c55e; font-weight: bold",
-      );
       await login(formData);
       // Redirect is handled by AuthContext
     } catch (error) {
-      console.log(
-        "%c[ERROR] Login failed:",
-        "color: #ef4444; font-weight: bold",
-        error,
-      );
       setApiError(error.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);

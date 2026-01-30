@@ -136,11 +136,6 @@ const CreateEventPage = () => {
     };
     reader.readAsDataURL(file);
 
-    console.log(
-      "%c[FORM] Banner selected:",
-      "color: #f97316; font-weight: bold",
-      file.name,
-    );
   };
 
   // Remove banner
@@ -230,22 +225,13 @@ const CreateEventPage = () => {
     e.preventDefault();
 
     if (!validateForm()) {
-      console.log(
-        "%c[FORM] Validation failed",
-        "color: #ef4444; font-weight: bold",
-        errors,
-      );
+      
       return;
     }
 
     try {
       setLoading(true);
       setError("");
-      console.log(
-        "%c[FORM] Creating event...",
-        "color: #3b82f6; font-weight: bold",
-        formData,
-      );
 
       // Prepare event data
       const startDateTime = new Date(
@@ -276,10 +262,7 @@ const CreateEventPage = () => {
 
       // Upload banner if selected
       if (bannerFile) {
-        console.log(
-          "%c[UPLOAD] Uploading banner...",
-          "color: #f97316; font-weight: bold",
-        );
+        
         // Banner upload will be implemented when API is ready
         // const bannerResponse = await eventService.uploadBanner(bannerFile);
         // eventData.bannerUrl = bannerResponse.url;
@@ -287,12 +270,6 @@ const CreateEventPage = () => {
 
       // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      console.log(
-        "%c[SUCCESS] Event created",
-        "color: #22c55e; font-weight: bold",
-        eventData,
-      );
 
       // Navigate to my events page
       navigate("/organizer/my-events");
@@ -312,18 +289,10 @@ const CreateEventPage = () => {
   const handleSaveDraft = async () => {
     try {
       setLoading(true);
-      console.log(
-        "%c[FORM] Saving as draft...",
-        "color: #3b82f6; font-weight: bold",
-      );
 
       // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      console.log(
-        "%c[SUCCESS] Draft saved",
-        "color: #22c55e; font-weight: bold",
-      );
       navigate("/organizer/my-events");
     } catch (err) {
       console.error(

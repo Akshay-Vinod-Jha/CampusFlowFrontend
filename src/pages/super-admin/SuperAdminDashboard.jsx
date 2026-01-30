@@ -19,10 +19,7 @@ const SuperAdminDashboard = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    console.log(
-      "%c[ROUTE] Super Admin Dashboard loaded",
-      "color: #9333ea; font-weight: bold",
-    );
+    
   }, []);
 
   return (

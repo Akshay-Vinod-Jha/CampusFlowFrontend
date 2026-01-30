@@ -24,10 +24,7 @@ const FacultyDashboard = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    console.log(
-      "%c[ROUTE] Faculty Dashboard loaded",
-      "color: #9333ea; font-weight: bold",
-    );
+    
   }, []);
 
   return (

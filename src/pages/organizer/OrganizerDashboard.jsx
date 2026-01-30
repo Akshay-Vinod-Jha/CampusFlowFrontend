@@ -29,10 +29,7 @@ const OrganizerDashboard = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    console.log(
-      "%c[ROUTE] Organizer Dashboard loaded",
-      "color: #9333ea; font-weight: bold",
-    );
+    
   }, []);
 
   return (
