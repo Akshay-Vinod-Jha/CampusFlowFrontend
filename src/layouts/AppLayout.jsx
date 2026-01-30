@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-import { Dialog, Button } from "@/components/ui";
+import { Dialog, Button, Spinner } from "@/components/ui";
+import { useAuth } from "@/context/AuthContext";
 
 /**
  * Main Application Layout
@@ -11,18 +12,11 @@ import { Dialog, Button } from "@/components/ui";
  */
 
 const AppLayout = () => {
-  const navigate = useNavigate();
+  const { user, logout, loading } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
 
-  // Mock user data - will be replaced with AuthContext in Task 14
-  const [user] = useState({
-    name: "John Doe",
-    email: "john.doe@college.edu",
-    role: "STUDENT",
-  });
-
-  // Mock notifications - will be replaced with API in Task 14
+  // Mock notifications - will be replaced with API in future tasks
   const [notifications] = useState([
     {
       title: "Event Approved",
@@ -44,7 +38,7 @@ const AppLayout = () => {
     },
   ]);
 
-  // Mock pending approvals count
+  // Mock pending approvals count - will be replaced with API
   const [pendingCount] = useState(3);
 
   useEffect(() => {
@@ -52,7 +46,9 @@ const AppLayout = () => {
       "%c[ROUTE] AppLayout mounted",
       "color: #9333ea; font-weight: bold",
     );
-    console.log("%c[STATE] User:", "color: #06b6d4; font-weight: bold", user);
+    if (user) {
+      console.log("%c[STATE] User:", "color: #06b6d4; font-weight: bold", user);
+    }
   }, [user]);
 
   const handleLogout = () => {
@@ -69,9 +65,22 @@ const AppLayout = () => {
       "color: #22c55e; font-weight: bold",
     );
     setLogoutDialogOpen(false);
-    // Clear auth state and redirect - will be implemented in Task 14
-    navigate("/auth/login");
+    logout();
   };
+
+  // Show loading spinner while auth is initializing
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-neutral-50">
+        <Spinner size="xl" text="Loading..." />
+      </div>
+    );
+  }
+
+  // Redirect to login if not authenticated (handled by ProtectedRoute in Task 23)
+  if (!user) {
+    return null;
+  }
 
   const handleMenuToggle = () => {
     setMobileMenuOpen(!mobileMenuOpen);
