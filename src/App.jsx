@@ -8,7 +8,12 @@ import { AppLayout, AuthLayout } from "@/layouts";
 import { LoginPage, RegisterPage, ForgotPasswordPage } from "@/pages/auth";
 
 // Student Pages
-import StudentDashboard from "@/pages/student/StudentDashboard";
+import {
+  StudentDashboard,
+  EventListingPage,
+  EventDetailsPage,
+  MyEventsPage,
+} from "@/pages/student";
 
 // Organizer Pages
 import OrganizerDashboard from "@/pages/organizer/OrganizerDashboard";
@@ -68,6 +73,9 @@ function App() {
               }
             >
               <Route path="dashboard" element={<StudentDashboard />} />
+              <Route path="events" element={<EventListingPage />} />
+              <Route path="events/:eventId" element={<EventDetailsPage />} />
+              <Route path="my-events" element={<MyEventsPage />} />
               <Route
                 path="*"
                 element={<Navigate to="/student/dashboard" replace />}

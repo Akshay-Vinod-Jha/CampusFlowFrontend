@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Card, Button, Badge } from "@/components/ui";
 import { GraduationCap, Calendar, FileText, TrendingUp } from "lucide-react";
@@ -111,18 +112,24 @@ const StudentDashboard = () => {
           </Card.Header>
           <Card.Content>
             <div className="space-y-3">
-              <Button variant="outline" className="w-full justify-start">
-                <Calendar className="w-4 h-4" />
-                Browse Events
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <FileText className="w-4 h-4" />
-                My Registrations
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <GraduationCap className="w-4 h-4" />
-                Attended Events
-              </Button>
+              <Link to="/student/events">
+                <Button variant="outline" className="w-full justify-start">
+                  <Calendar className="w-4 h-4" />
+                  Browse Events
+                </Button>
+              </Link>
+              <Link to="/student/my-events">
+                <Button variant="outline" className="w-full justify-start">
+                  <FileText className="w-4 h-4" />
+                  My Registrations
+                </Button>
+              </Link>
+              <Link to="/student/my-events?filter=past">
+                <Button variant="outline" className="w-full justify-start">
+                  <GraduationCap className="w-4 h-4" />
+                  Attended Events
+                </Button>
+              </Link>
             </div>
           </Card.Content>
         </Card>
