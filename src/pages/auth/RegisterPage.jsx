@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
-import { Button, Input, Card, Alert, Badge } from '@/components/ui';
-import { User, Mail, Lock, GraduationCap, Building2 } from 'lucide-react';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { Button, Input, Card, Alert, Badge } from "@/components/ui";
+import { User, Mail, Lock, GraduationCap, Building2 } from "lucide-react";
 
 /**
  * Registration Page
@@ -12,50 +12,58 @@ import { User, Mail, Lock, GraduationCap, Building2 } from 'lucide-react';
 const RegisterPage = () => {
   const { register } = useAuth();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    role: 'STUDENT',
-    department: '',
-    collegeId: '', // In production, this would be selected from a dropdown
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    role: "STUDENT",
+    department: "",
+    collegeId: "", // In production, this would be selected from a dropdown
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [apiError, setApiError] = useState('');
+  const [apiError, setApiError] = useState("");
 
   const roles = [
-    { value: 'STUDENT', label: 'Student', description: 'Register for events' },
-    { value: 'ORGANIZER', label: 'Organizer', description: 'Create and manage events' },
-    { value: 'FACULTY', label: 'Faculty', description: 'Approve events' },
+    { value: "STUDENT", label: "Student", description: "Register for events" },
+    {
+      value: "ORGANIZER",
+      label: "Organizer",
+      description: "Create and manage events",
+    },
+    { value: "FACULTY", label: "Faculty", description: "Approve events" },
   ];
 
   const departments = [
-    'Computer Science',
-    'Electronics',
-    'Mechanical',
-    'Civil',
-    'Electrical',
-    'Information Technology',
-    'Other',
+    "Computer Science",
+    "Electronics",
+    "Mechanical",
+    "Civil",
+    "Electrical",
+    "Information Technology",
+    "Other",
   ];
 
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    
+
     // Clear field error when user starts typing
     if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
-    }
-    
-    // Clear API error when user modifies form
-    if (apiError) {
-      setApiError('');
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
 
-    console.log('%c[FORM] Field updated:', 'color: #f97316; font-weight: bold', { name, value });
+    // Clear API error when user modifies form
+    if (apiError) {
+      setApiError("");
+    }
+
+    console.log(
+      "%c[FORM] Field updated:",
+      "color: #f97316; font-weight: bold",
+      { name, value },
+    );
   };
 
   // Validate form
@@ -64,43 +72,48 @@ const RegisterPage = () => {
 
     // Name validation
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = "Name is required";
     } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters';
+      newErrors.name = "Name must be at least 2 characters";
     }
 
     // Email validation
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = "Please enter a valid email address";
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = "Password must be at least 6 characters";
     } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-      newErrors.password = 'Password must contain uppercase, lowercase, and number';
+      newErrors.password =
+        "Password must contain uppercase, lowercase, and number";
     }
 
     // Confirm Password validation
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
+      newErrors.confirmPassword = "Please confirm your password";
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = "Passwords do not match";
     }
 
     // Department validation
     if (!formData.department) {
-      newErrors.department = 'Department is required';
+      newErrors.department = "Department is required";
     }
 
-    console.log('%c[FORM] Validation result:', 'color: #f97316; font-weight: bold', {
-      valid: Object.keys(newErrors).length === 0,
-      errors: newErrors,
-    });
+    console.log(
+      "%c[FORM] Validation result:",
+      "color: #f97316; font-weight: bold",
+      {
+        valid: Object.keys(newErrors).length === 0,
+        errors: newErrors,
+      },
+    );
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -109,29 +122,42 @@ const RegisterPage = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    console.log('%c[FORM] Registration form submitted', 'color: #f97316; font-weight: bold');
-    
+
+    console.log(
+      "%c[FORM] Registration form submitted",
+      "color: #f97316; font-weight: bold",
+    );
+
     // Validate form
     if (!validateForm()) {
-      console.log('%c[FORM] Validation failed', 'color: #f97316; font-weight: bold');
+      console.log(
+        "%c[FORM] Validation failed",
+        "color: #f97316; font-weight: bold",
+      );
       return;
     }
 
     setLoading(true);
-    setApiError('');
+    setApiError("");
 
     try {
-      console.log('%c[AUTH] Attempting registration...', 'color: #22c55e; font-weight: bold');
-      
+      console.log(
+        "%c[AUTH] Attempting registration...",
+        "color: #22c55e; font-weight: bold",
+      );
+
       // Remove confirmPassword before sending to API
       const { confirmPassword, ...registrationData } = formData;
-      
+
       await register(registrationData);
       // Redirect is handled by AuthContext
     } catch (error) {
-      console.log('%c[ERROR] Registration failed:', 'color: #ef4444; font-weight: bold', error);
-      setApiError(error.message || 'Registration failed. Please try again.');
+      console.log(
+        "%c[ERROR] Registration failed:",
+        "color: #ef4444; font-weight: bold",
+        error,
+      );
+      setApiError(error.message || "Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -153,7 +179,11 @@ const RegisterPage = () => {
 
           {/* API Error Alert */}
           {apiError && (
-            <Alert variant="error" className="mb-6" onClose={() => setApiError('')}>
+            <Alert
+              variant="error"
+              className="mb-6"
+              onClose={() => setApiError("")}
+            >
               {apiError}
             </Alert>
           )}
@@ -198,8 +228,8 @@ const RegisterPage = () => {
                     key={role.value}
                     className={`flex items-start p-4 rounded-lg border-2 cursor-pointer transition-all ${
                       formData.role === role.value
-                        ? 'border-primary-500 bg-primary-50'
-                        : 'border-neutral-200 hover:border-neutral-300'
+                        ? "border-primary-500 bg-primary-50"
+                        : "border-neutral-200 hover:border-neutral-300"
                     }`}
                   >
                     <input
@@ -220,7 +250,9 @@ const RegisterPage = () => {
                           <Badge variant="primary">Selected</Badge>
                         )}
                       </div>
-                      <p className="text-sm text-neutral-600">{role.description}</p>
+                      <p className="text-sm text-neutral-600">
+                        {role.description}
+                      </p>
                     </div>
                   </label>
                 ))}
@@ -237,7 +269,7 @@ const RegisterPage = () => {
                 value={formData.department}
                 onChange={handleChange}
                 className={`w-full px-3 py-2 rounded-lg bg-white border text-neutral-900 transition-colors duration-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 disabled:bg-neutral-100 disabled:cursor-not-allowed ${
-                  errors.department ? 'border-error-500' : 'border-neutral-300'
+                  errors.department ? "border-error-500" : "border-neutral-300"
                 }`}
                 disabled={loading}
                 required
@@ -250,7 +282,9 @@ const RegisterPage = () => {
                 ))}
               </select>
               {errors.department && (
-                <p className="mt-1 text-sm text-error-600">{errors.department}</p>
+                <p className="mt-1 text-sm text-error-600">
+                  {errors.department}
+                </p>
               )}
             </div>
 
@@ -263,7 +297,10 @@ const RegisterPage = () => {
               value={formData.password}
               onChange={handleChange}
               error={errors.password}
-              helperText={!errors.password && "Min 6 characters with uppercase, lowercase & number"}
+              helperText={
+                !errors.password &&
+                "Min 6 characters with uppercase, lowercase & number"
+              }
               disabled={loading}
               required
             />
@@ -291,7 +328,7 @@ const RegisterPage = () => {
               disabled={loading}
             >
               <GraduationCap className="w-5 h-5" />
-              {loading ? 'Creating Account...' : 'Create Account'}
+              {loading ? "Creating Account..." : "Create Account"}
             </Button>
           </form>
 

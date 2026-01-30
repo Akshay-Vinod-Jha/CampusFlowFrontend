@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
-import { Button, Input, Card, Alert } from '@/components/ui';
-import { Mail, Lock, LogIn } from 'lucide-react';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { Button, Input, Card, Alert } from "@/components/ui";
+import { Mail, Lock, LogIn } from "lucide-react";
 
 /**
  * Login Page
@@ -12,29 +12,33 @@ import { Mail, Lock, LogIn } from 'lucide-react';
 const LoginPage = () => {
   const { login } = useAuth();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [apiError, setApiError] = useState('');
+  const [apiError, setApiError] = useState("");
 
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    
+
     // Clear field error when user starts typing
     if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
-    }
-    
-    // Clear API error when user modifies form
-    if (apiError) {
-      setApiError('');
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
 
-    console.log('%c[FORM] Field updated:', 'color: #f97316; font-weight: bold', { name, value });
+    // Clear API error when user modifies form
+    if (apiError) {
+      setApiError("");
+    }
+
+    console.log(
+      "%c[FORM] Field updated:",
+      "color: #f97316; font-weight: bold",
+      { name, value },
+    );
   };
 
   // Validate form
@@ -43,22 +47,26 @@ const LoginPage = () => {
 
     // Email validation
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = "Please enter a valid email address";
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = "Password must be at least 6 characters";
     }
 
-    console.log('%c[FORM] Validation result:', 'color: #f97316; font-weight: bold', {
-      valid: Object.keys(newErrors).length === 0,
-      errors: newErrors,
-    });
+    console.log(
+      "%c[FORM] Validation result:",
+      "color: #f97316; font-weight: bold",
+      {
+        valid: Object.keys(newErrors).length === 0,
+        errors: newErrors,
+      },
+    );
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -67,25 +75,38 @@ const LoginPage = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    console.log('%c[FORM] Login form submitted', 'color: #f97316; font-weight: bold');
-    
+
+    console.log(
+      "%c[FORM] Login form submitted",
+      "color: #f97316; font-weight: bold",
+    );
+
     // Validate form
     if (!validateForm()) {
-      console.log('%c[FORM] Validation failed', 'color: #f97316; font-weight: bold');
+      console.log(
+        "%c[FORM] Validation failed",
+        "color: #f97316; font-weight: bold",
+      );
       return;
     }
 
     setLoading(true);
-    setApiError('');
+    setApiError("");
 
     try {
-      console.log('%c[AUTH] Attempting login...', 'color: #22c55e; font-weight: bold');
+      console.log(
+        "%c[AUTH] Attempting login...",
+        "color: #22c55e; font-weight: bold",
+      );
       await login(formData);
       // Redirect is handled by AuthContext
     } catch (error) {
-      console.log('%c[ERROR] Login failed:', 'color: #ef4444; font-weight: bold', error);
-      setApiError(error.message || 'Login failed. Please try again.');
+      console.log(
+        "%c[ERROR] Login failed:",
+        "color: #ef4444; font-weight: bold",
+        error,
+      );
+      setApiError(error.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -107,7 +128,11 @@ const LoginPage = () => {
 
           {/* API Error Alert */}
           {apiError && (
-            <Alert variant="error" className="mb-6" onClose={() => setApiError('')}>
+            <Alert
+              variant="error"
+              className="mb-6"
+              onClose={() => setApiError("")}
+            >
               {apiError}
             </Alert>
           )}
@@ -160,7 +185,7 @@ const LoginPage = () => {
               disabled={loading}
             >
               <LogIn className="w-5 h-5" />
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
 

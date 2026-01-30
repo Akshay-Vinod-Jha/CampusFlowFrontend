@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Input, Card, Alert } from '@/components/ui';
-import { Mail, ArrowLeft } from 'lucide-react';
-import authService from '@/services/authService';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Button, Input, Card, Alert } from "@/components/ui";
+import { Mail, ArrowLeft } from "lucide-react";
+import authService from "@/services/authService";
 
 /**
  * Forgot Password Page
@@ -10,35 +10,43 @@ import authService from '@/services/authService';
  */
 
 const ForgotPasswordPage = () => {
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate email
     if (!email.trim()) {
-      setError('Email is required');
+      setError("Email is required");
       return;
     }
-    
+
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Please enter a valid email address');
+      setError("Please enter a valid email address");
       return;
     }
 
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      console.log('%c[AUTH] Requesting password reset for:', 'color: #22c55e; font-weight: bold', email);
+      console.log(
+        "%c[AUTH] Requesting password reset for:",
+        "color: #22c55e; font-weight: bold",
+        email,
+      );
       await authService.forgotPassword(email);
       setSuccess(true);
     } catch (err) {
-      console.log('%c[ERROR] Password reset request failed:', 'color: #ef4444; font-weight: bold', err);
-      setError(err.message || 'Failed to send reset email. Please try again.');
+      console.log(
+        "%c[ERROR] Password reset request failed:",
+        "color: #ef4444; font-weight: bold",
+        err,
+      );
+      setError(err.message || "Failed to send reset email. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -57,7 +65,7 @@ const ForgotPasswordPage = () => {
                 Check Your Email
               </h2>
               <p className="text-sm text-neutral-600">
-                We've sent password reset instructions to{' '}
+                We've sent password reset instructions to{" "}
                 <span className="font-medium text-neutral-900">{email}</span>
               </p>
             </div>
@@ -94,7 +102,11 @@ const ForgotPasswordPage = () => {
 
           {/* Error Alert */}
           {error && (
-            <Alert variant="error" className="mb-6" onClose={() => setError('')}>
+            <Alert
+              variant="error"
+              className="mb-6"
+              onClose={() => setError("")}
+            >
               {error}
             </Alert>
           )}
@@ -108,7 +120,7 @@ const ForgotPasswordPage = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                if (error) setError('');
+                if (error) setError("");
               }}
               disabled={loading}
               required
@@ -123,7 +135,7 @@ const ForgotPasswordPage = () => {
               disabled={loading}
             >
               <Mail className="w-5 h-5" />
-              {loading ? 'Sending...' : 'Send Reset Link'}
+              {loading ? "Sending..." : "Send Reset Link"}
             </Button>
           </form>
 

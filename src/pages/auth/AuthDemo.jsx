@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Card, Button } from '@/components/ui';
-import LoginPage from './LoginPage';
-import RegisterPage from './RegisterPage';
-import ForgotPasswordPage from './ForgotPasswordPage';
+import { useState } from "react";
+import { Card, Button } from "@/components/ui";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
+import ForgotPasswordPage from "./ForgotPasswordPage";
 
 /**
  * Auth Pages Demo/Preview
@@ -10,15 +10,15 @@ import ForgotPasswordPage from './ForgotPasswordPage';
  */
 
 const AuthDemo = () => {
-  const [currentPage, setCurrentPage] = useState('login');
+  const [currentPage, setCurrentPage] = useState("login");
 
   const pages = [
-    { id: 'login', label: 'Login Page', component: LoginPage },
-    { id: 'register', label: 'Register Page', component: RegisterPage },
-    { id: 'forgot', label: 'Forgot Password', component: ForgotPasswordPage },
+    { id: "login", label: "Login Page", component: LoginPage },
+    { id: "register", label: "Register Page", component: RegisterPage },
+    { id: "forgot", label: "Forgot Password", component: ForgotPasswordPage },
   ];
 
-  const CurrentComponent = pages.find(p => p.id === currentPage)?.component;
+  const CurrentComponent = pages.find((p) => p.id === currentPage)?.component;
 
   return (
     <div className="min-h-screen bg-neutral-50 p-8">
@@ -38,7 +38,7 @@ const AuthDemo = () => {
           {pages.map((page) => (
             <Button
               key={page.id}
-              variant={currentPage === page.id ? 'primary' : 'outline'}
+              variant={currentPage === page.id ? "primary" : "outline"}
               onClick={() => setCurrentPage(page.id)}
             >
               {page.label}
@@ -51,7 +51,7 @@ const AuthDemo = () => {
           {/* Left: Page Component */}
           <div>
             <h2 className="text-xl font-semibold text-neutral-900 mb-4">
-              {pages.find(p => p.id === currentPage)?.label}
+              {pages.find((p) => p.id === currentPage)?.label}
             </h2>
             {CurrentComponent && <CurrentComponent />}
           </div>
