@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Card, Button, Badge } from "@/components/ui";
 import { Calendar, Plus, FileText, CheckCircle, Clock } from "lucide-react";
@@ -30,10 +31,12 @@ const OrganizerDashboard = () => {
             Manage your events and track approvals
           </p>
         </div>
-        <Button variant="primary" size="lg">
-          <Plus className="w-5 h-5" />
-          Create Event
-        </Button>
+        <Link to="/organizer/create-event">
+          <Button variant="primary" size="lg">
+            <Plus className="w-5 h-5" />
+            Create Event
+          </Button>
+        </Link>
       </div>
 
       {/* Stats Cards */}
@@ -115,18 +118,24 @@ const OrganizerDashboard = () => {
             <Card.Title>Quick Actions</Card.Title>
             <Card.Description>Manage events</Card.Description>
           </Card.Header>
-          <Card.Content>
-            <div className="space-y-3">
-              <Button variant="primary" className="w-full justify-start">
-                <Plus className="w-4 h-4" />
-                Create New Event
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <FileText className="w-4 h-4" />
-                View My Events
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <Clock className="w-4 h-4" />
+          <CardLink to="/organizer/create-event" className="block">
+                <Button variant="primary" className="w-full justify-start">
+                  <Plus className="w-4 h-4" />
+                  Create New Event
+                </Button>
+              </Link>
+              <Link to="/organizer/my-events" className="block">
+                <Button variant="outline" className="w-full justify-start">
+                  <FileText className="w-4 h-4" />
+                  View My Events
+                </Button>
+              </Link>
+              <Link to="/organizer/my-events?filter=pending" className="block">
+                <Button variant="outline" className="w-full justify-start">
+                  <Clock className="w-4 h-4" />
+                  Pending Approvals
+                </Button>
+              </Link className="w-4 h-4" />
                 Pending Approvals
               </Button>
             </div>
