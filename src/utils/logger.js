@@ -144,6 +144,24 @@ export const logApiResponse = (method, url, status, data = null) => {
 
 export const logApiError = (method, url, error) => {
   logger.error(`API Error: ${method.toUpperCase()} ${url}`, error);
+
+  // Log validation errors in a more readable format
+  if (error?.response?.data?.errors) {
+    console.group(
+      "%c📋 Validation Errors:",
+      "color: #ff6b6b; font-weight: bold;",
+    );
+    error.response.data.errors.forEach((err) => {
+      console.error(`  • ${err.field}: ${err.message}`);
+    });
+    console.groupEnd();
+  } else if (error?.response?.data) {
+    console.log(
+      "%c📄 Error Details:",
+      "color: #ff6b6b; font-weight: bold;",
+      error.response.data,
+    );
+  }
 };
 
 export default logger;

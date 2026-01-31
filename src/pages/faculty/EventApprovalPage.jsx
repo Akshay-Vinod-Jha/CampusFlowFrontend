@@ -25,6 +25,7 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import ApprovalTimeline from "@/components/events/ApprovalTimeline";
 import approvalService from "@/services/approvalService";
+import eventService from "@/services/eventService";
 import emailService from "@/services/emailService";
 import { formatDate, formatDateRange } from "@/utils/dateUtils";
 
@@ -54,9 +55,11 @@ const EventApprovalPage = () => {
       setLoading(true);
       setError("");
 
-      // Mock data (will be replaced with API call)
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Fetch event details from API
+      const response = await eventService.getEventById(eventId);
+      setEvent(response.data);
 
+      /* LEGACY MOCK DATA - REMOVED
       const mockEvent = {
         _id: eventId,
         title: "AI & ML Workshop",
@@ -92,9 +95,7 @@ const EventApprovalPage = () => {
           },
         ],
       };
-
-      setEvent(mockEvent);
-      
+      */ // END LEGACY MOCK DATA
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch event",
@@ -111,13 +112,12 @@ const EventApprovalPage = () => {
     try {
       setProcessing(true);
 
-      // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Approve event via API
+      await approvalService.approveEvent(eventId, { comment: comments });
 
       // Send approval notification email
       try {
         await emailService.sendApprovalEmail(eventId, "APPROVED");
-        
       } catch (emailErr) {
         console.warn("[EMAIL] Failed to send approval email:", emailErr);
         // Don't fail approval if email fails
@@ -152,13 +152,12 @@ const EventApprovalPage = () => {
     try {
       setProcessing(true);
 
-      // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Reject event via API
+      await approvalService.rejectEvent(eventId, { comment: comments });
 
       // Send rejection notification email
       try {
         await emailService.sendApprovalEmail(eventId, "REJECTED");
-        
       } catch (emailErr) {
         console.warn("[EMAIL] Failed to send rejection email:", emailErr);
         // Don't fail rejection if email fails
@@ -270,7 +269,7 @@ const EventApprovalPage = () => {
         <div className="lg:col-span-2 space-y-6">
           {/* Banner */}
           <Card>
-            <div className="w-full h-64 bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center rounded-t-lg">
+            <div className="w-full h-64 bg-linear-to-br from-primary-500 to-secondary-500 flex items-center justify-center rounded-t-lg">
               <Calendar className="w-16 h-16 text-white opacity-50" />
             </div>
           </Card>

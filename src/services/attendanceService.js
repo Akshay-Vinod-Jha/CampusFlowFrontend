@@ -3,7 +3,7 @@
  * Handles attendance tracking and QR code validation
  */
 
-import apiClient from "./apiClient";
+import api from "./api";
 
 /**
  * Mark attendance using QR code data
@@ -13,8 +13,7 @@ import apiClient from "./apiClient";
  */
 export const markAttendance = async (eventId, qrData) => {
   try {
-
-    const response = await apiClient.post(`/events/${eventId}/attendance`, {
+    const response = await api.post(`/events/${eventId}/attendance`, {
       registrationId: qrData.registrationId,
       userId: qrData.userId,
       qrData,
@@ -34,8 +33,7 @@ export const markAttendance = async (eventId, qrData) => {
  */
 export const getAttendance = async (eventId) => {
   try {
-
-    const response = await apiClient.get(`/events/${eventId}/attendance`);
+    const response = await api.get(`/events/${eventId}/attendance`);
 
     return response.data;
   } catch (error) {
@@ -51,8 +49,7 @@ export const getAttendance = async (eventId) => {
  */
 export const getAttendanceStats = async (eventId) => {
   try {
-
-    const response = await apiClient.get(`/events/${eventId}/attendance/stats`);
+    const response = await api.get(`/events/${eventId}/attendance/stats`);
 
     return response.data;
   } catch (error) {
@@ -69,8 +66,7 @@ export const getAttendanceStats = async (eventId) => {
  */
 export const validateQRCode = async (eventId, qrData) => {
   try {
-
-    const response = await apiClient.post(
+    const response = await api.post(
       `/events/${eventId}/attendance/validate`,
       {
         registrationId: qrData.registrationId,
@@ -93,8 +89,7 @@ export const validateQRCode = async (eventId, qrData) => {
  */
 export const exportAttendance = async (eventId) => {
   try {
-
-    const response = await apiClient.get(
+    const response = await api.get(
       `/events/${eventId}/attendance/export`,
       {
         responseType: "blob",

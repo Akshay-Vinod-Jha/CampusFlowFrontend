@@ -69,13 +69,13 @@ export const ToastProvider = ({ children }) => {
               key={toast.id}
               className={`toast ${styleClass} flex items-center gap-3 animate-slide-in`}
             >
-              <Icon className="w-5 h-5 flex-shrink-0" />
+              <Icon className="w-5 h-5 shrink-0" />
               <p className="flex-1 text-sm font-medium text-neutral-900">
                 {toast.message}
               </p>
               <button
                 onClick={() => removeToast(toast.id)}
-                className="flex-shrink-0 p-1 rounded hover:bg-neutral-100 transition-colors"
+                className="shrink-0 p-1 rounded hover:bg-neutral-100 transition-colors"
                 aria-label="Close notification"
               >
                 <X className="w-4 h-4 text-neutral-500" />

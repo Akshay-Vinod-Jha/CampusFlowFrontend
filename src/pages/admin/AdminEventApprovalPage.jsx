@@ -27,6 +27,7 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import ApprovalTimeline from "@/components/events/ApprovalTimeline";
 import approvalService from "@/services/approvalService";
+import eventService from "@/services/eventService";
 import emailService from "@/services/emailService";
 import { formatDate, formatDateRange } from "@/utils/dateUtils";
 
@@ -56,9 +57,11 @@ const AdminEventApprovalPage = () => {
       setLoading(true);
       setError("");
 
-      // Mock data (will be replaced with API call)
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Fetch event details from API
+      const response = await eventService.getEventById(eventId);
+      setEvent(response.data);
 
+      /* LEGACY MOCK DATA - REMOVED
       const mockEvent = {
         _id: eventId,
         title: "Tech Fest 2024",
@@ -109,8 +112,7 @@ const AdminEventApprovalPage = () => {
           },
         ],
       };
-
-      setEvent(mockEvent);
+      */ // END LEGACY MOCK DATA
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch event",
@@ -127,8 +129,8 @@ const AdminEventApprovalPage = () => {
     try {
       setProcessing(true);
 
-      // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Approve event via API
+      await approvalService.approveEvent(eventId, { comment: comments });
 
       // Send approval notification email
       try {
@@ -168,8 +170,8 @@ const AdminEventApprovalPage = () => {
     try {
       setProcessing(true);
 
-      // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Reject event via API
+      await approvalService.rejectEvent(eventId, { comment: comments });
 
       // Send rejection notification email
       try {
@@ -296,7 +298,7 @@ const AdminEventApprovalPage = () => {
         <div className="lg:col-span-2 space-y-6">
           {/* Banner */}
           <Card>
-            <div className="w-full h-64 bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center rounded-t-lg">
+            <div className="w-full h-64 bg-linear-to-br from-primary-500 to-secondary-500 flex items-center justify-center rounded-t-lg">
               <Calendar className="w-16 h-16 text-white opacity-50" />
             </div>
           </Card>

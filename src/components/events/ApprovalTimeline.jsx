@@ -125,7 +125,7 @@ const ApprovalTimeline = ({ approvals = [], currentStatus = "DRAFT" }) => {
             <div className="flex items-start gap-4">
               {/* Icon */}
               <div
-                className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${
+                className={`relative z-10 w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
                   status === "completed"
                     ? "bg-success-100 text-success-600"
                     : status === "active"

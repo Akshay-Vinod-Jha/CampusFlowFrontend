@@ -5,9 +5,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Camera, X, CheckCircle, AlertCircle, Scan } from "lucide-react";
-import { Card } from "../ui/Card";
-import { Button } from "../ui/Button";
-import { Badge } from "../ui/Badge";
+import Card from "../ui/Card";
+import Button from "../ui/Button";
+import Badge from "../ui/Badge";
 import { parseQRData, validateQRData } from "../../utils/qrCodeUtils";
 
 const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
@@ -34,7 +34,6 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
 
   const startCamera = async () => {
     try {
-      
       setError(null);
 
       // Check if mediaDevices is supported
@@ -56,7 +55,6 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         videoRef.current.play();
-        
       }
 
       // Start scanning loop
@@ -71,7 +69,6 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
 
   const stopCamera = () => {
     try {
-
       // Stop scanning loop
       if (scanIntervalRef.current) {
         clearInterval(scanIntervalRef.current);
@@ -96,7 +93,6 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
   const startScanningLoop = () => {
     // For now, we'll use a manual scan button approach
     // In a real implementation, you would use a library like jsQR to continuously scan frames
-    
   };
 
   const handleManualInput = () => {
@@ -109,7 +105,6 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
 
   const processScanResult = (qrDataString) => {
     try {
-
       // Parse QR data
       const qrData = parseQRData(qrDataString);
 
@@ -216,7 +211,7 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
         {error && (
           <div className="p-4 bg-error-50 border border-error-200 rounded-lg">
             <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-error-500 flex-shrink-0 mt-0.5" />
+              <AlertCircle className="w-5 h-5 text-error-500 shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm text-error-900 font-medium">Scan Error</p>
                 <p className="text-sm text-error-700 mt-1">{error}</p>
@@ -229,7 +224,7 @@ const QRScanner = ({ onScan, onError, onClose, isActive = true }) => {
         {scanResult && scanResult.success && (
           <div className="p-4 bg-success-50 border border-success-200 rounded-lg">
             <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="w-5 h-5 text-success-500 shrink-0 mt-0.5" />
               <div className="flex-1">
                 <p className="text-sm text-success-900 font-medium mb-2">
                   QR Code Scanned

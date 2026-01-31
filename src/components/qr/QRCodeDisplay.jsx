@@ -6,8 +6,8 @@
 import { useState, useEffect } from "react";
 import { QRCodeSVG } from "react-qr-code";
 import { Download, Printer, QrCode } from "lucide-react";
-import { Card } from "../ui/Card";
-import { Button } from "../ui/Button";
+import Card from "../ui/Card";
+import Button from "../ui/Button";
 import {
   generateQRData,
   generateQRCodeDataURL,
@@ -28,7 +28,6 @@ const QRCodeDisplay = ({
       try {
         const data = generateQRData(registration);
         setQrData(data);
-        
       } catch (error) {
         console.error("[QRCodeDisplay] Error generating QR data:", error);
       }
@@ -42,7 +41,6 @@ const QRCodeDisplay = ({
       const dataURL = await generateQRCodeDataURL(qrData, { width: 512 });
       const filename = `event-${event?.title?.replace(/\s+/g, "-") || "registration"}-qr.png`;
       downloadQRCode(dataURL, filename);
-
     } catch (error) {
       console.error("[QRCodeDisplay] Download failed:", error);
     } finally {
@@ -52,7 +50,6 @@ const QRCodeDisplay = ({
 
   const handlePrint = () => {
     try {
-
       // Create a new window for printing
       const printWindow = window.open("", "_blank");
       if (!printWindow) {

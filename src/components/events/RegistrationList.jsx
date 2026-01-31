@@ -74,7 +74,7 @@ const RegistrationList = ({
             >
               <div className="flex items-start gap-3 flex-1">
                 {/* Avatar */}
-                <div className="w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center shrink-0">
                   <span className="font-semibold text-sm">
                     {registration.user?.name?.charAt(0).toUpperCase() || "U"}
                   </span>

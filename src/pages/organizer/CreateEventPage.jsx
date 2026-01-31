@@ -135,7 +135,6 @@ const CreateEventPage = () => {
       setBannerPreview(reader.result);
     };
     reader.readAsDataURL(file);
-
   };
 
   // Remove banner
@@ -225,7 +224,6 @@ const CreateEventPage = () => {
     e.preventDefault();
 
     if (!validateForm()) {
-      
       return;
     }
 
@@ -260,16 +258,19 @@ const CreateEventPage = () => {
           .filter((t) => t),
       };
 
-      // Upload banner if selected
-      if (bannerFile) {
-        
-        // Banner upload will be implemented when API is ready
-        // const bannerResponse = await eventService.uploadBanner(bannerFile);
-        // eventData.bannerUrl = bannerResponse.url;
-      }
+      // Create event in database (with optional banner upload)
+      console.log(
+        "%c[INFO] Creating event...",
+        "color: #3b82f6; font-weight: bold",
+      );
+      const response = await eventService.createEvent(eventData, bannerFile);
 
-      // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Submit event for approval
+      console.log(
+        "%c[INFO] Submitting for approval...",
+        "color: #3b82f6; font-weight: bold",
+      );
+      await eventService.submitForApproval(response.data._id);
 
       // Navigate to my events page
       navigate("/organizer/my-events");
@@ -279,7 +280,11 @@ const CreateEventPage = () => {
         "color: #ef4444; font-weight: bold",
         err,
       );
-      setError(err.message || "Failed to create event. Please try again.");
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Failed to create event. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -289,9 +294,37 @@ const CreateEventPage = () => {
   const handleSaveDraft = async () => {
     try {
       setLoading(true);
+      setError("");
 
-      // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Prepare event data
+      const startDateTime = new Date(
+        `${formData.startDate}T${formData.startTime}`,
+      );
+      const endDateTime = new Date(`${formData.endDate}T${formData.endTime}`);
+
+      const eventData = {
+        title: formData.title.trim(),
+        description: formData.description.trim(),
+        longDescription: formData.longDescription.trim(),
+        category: formData.category,
+        type: formData.type,
+        startDate: startDateTime.toISOString(),
+        endDate: endDateTime.toISOString(),
+        location: formData.location.trim(),
+        maxParticipants: parseInt(formData.maxParticipants),
+        requirements: formData.requirements
+          .trim()
+          .split("\n")
+          .filter((r) => r.trim()),
+        tags: formData.tags
+          .trim()
+          .split(",")
+          .map((t) => t.trim())
+          .filter((t) => t),
+      };
+
+      // Create event as draft (status will be DRAFT by default)
+      await eventService.createEvent(eventData, bannerFile);
 
       navigate("/organizer/my-events");
     } catch (err) {

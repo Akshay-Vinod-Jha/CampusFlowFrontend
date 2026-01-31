@@ -15,7 +15,6 @@ const Navbar = ({ user, onLogout, onMenuToggle, notifications = [] }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      
       // Handle search logic here
     }
   };
@@ -93,7 +92,7 @@ const Navbar = ({ user, onLogout, onMenuToggle, notifications = [] }) => {
                     >
                       <div className="flex items-start gap-3">
                         <div
-                          className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                          className={`w-2 h-2 rounded-full mt-2 shrink-0 ${
                             notification.read
                               ? "bg-neutral-300"
                               : "bg-primary-500"

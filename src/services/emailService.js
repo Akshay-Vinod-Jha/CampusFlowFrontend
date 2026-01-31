@@ -3,7 +3,7 @@
  * Handles email notifications and communication
  */
 
-import apiClient from "./apiClient";
+import api from "./api";
 
 /**
  * Send registration confirmation email
@@ -12,8 +12,7 @@ import apiClient from "./apiClient";
  */
 export const sendRegistrationEmail = async (registrationId) => {
   try {
-
-    const response = await apiClient.post(`/emails/registration-confirmation`, {
+    const response = await api.post(`/emails/registration-confirmation`, {
       registrationId,
     });
 
@@ -32,8 +31,7 @@ export const sendRegistrationEmail = async (registrationId) => {
  */
 export const sendApprovalEmail = async (eventId, status) => {
   try {
-
-    const response = await apiClient.post(`/emails/approval-notification`, {
+    const response = await api.post(`/emails/approval-notification`, {
       eventId,
       status,
     });
@@ -53,8 +51,7 @@ export const sendApprovalEmail = async (eventId, status) => {
  */
 export const sendEventReminder = async (eventId, hoursBefore = 24) => {
   try {
-
-    const response = await apiClient.post(`/emails/event-reminder`, {
+    const response = await api.post(`/emails/event-reminder`, {
       eventId,
       hoursBefore,
     });
@@ -74,8 +71,7 @@ export const sendEventReminder = async (eventId, hoursBefore = 24) => {
  */
 export const sendCancellationEmail = async (registrationId, reason = "") => {
   try {
-
-    const response = await apiClient.post(`/emails/cancellation-notification`, {
+    const response = await api.post(`/emails/cancellation-notification`, {
       registrationId,
       reason,
     });
@@ -94,8 +90,7 @@ export const sendCancellationEmail = async (registrationId, reason = "") => {
  */
 export const getEmailHistory = async (eventId) => {
   try {
-
-    const response = await apiClient.get(`/emails/history/${eventId}`);
+    const response = await api.get(`/emails/history/${eventId}`);
 
     return response.data;
   } catch (error) {
@@ -112,8 +107,7 @@ export const getEmailHistory = async (eventId) => {
  */
 export const previewEmailTemplate = async (templateType, data) => {
   try {
-
-    const response = await apiClient.post(`/emails/preview`, {
+    const response = await api.post(`/emails/preview`, {
       templateType,
       data,
     });
@@ -140,8 +134,7 @@ export const sendCustomEmail = async (
   recipients = [],
 ) => {
   try {
-
-    const response = await apiClient.post(`/emails/custom`, {
+    const response = await api.post(`/emails/custom`, {
       eventId,
       subject,
       message,
@@ -162,8 +155,7 @@ export const sendCustomEmail = async (
  */
 export const getEmailStats = async (eventId) => {
   try {
-
-    const response = await apiClient.get(`/emails/stats/${eventId}`);
+    const response = await api.get(`/emails/stats/${eventId}`);
 
     return response.data;
   } catch (error) {

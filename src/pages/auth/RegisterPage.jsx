@@ -123,7 +123,17 @@ const RegisterPage = () => {
       await register(registrationData);
       // Redirect is handled by AuthContext
     } catch (error) {
-      setApiError(error.message || "Registration failed. Please try again.");
+      // Handle validation errors from backend
+      if (error.errors && Array.isArray(error.errors)) {
+        const backendErrors = {};
+        error.errors.forEach((err) => {
+          backendErrors[err.field] = err.message;
+        });
+        setErrors(backendErrors);
+        setApiError("Please fix the validation errors below.");
+      } else {
+        setApiError(error.message || "Registration failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

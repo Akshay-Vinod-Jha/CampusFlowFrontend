@@ -57,9 +57,11 @@ const MyCreatedEventsPage = () => {
       setLoading(true);
       setError("");
 
-      // Mock data (will be replaced with API call)
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Fetch events from API
+      const response = await eventService.getMyCreatedEvents();
+      setEvents(response.data || []);
 
+      /* LEGACY MOCK DATA - REMOVED
       const mockEvents = [
         {
           _id: "1",
@@ -151,9 +153,7 @@ const MyCreatedEventsPage = () => {
           createdAt: new Date("2024-02-15T14:00:00"),
         },
       ];
-
-      setEvents(mockEvents);
-      
+      */ // END LEGACY MOCK DATA
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch events",
@@ -172,13 +172,12 @@ const MyCreatedEventsPage = () => {
     try {
       setDeleting(true);
 
-      // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Delete event via API
+      await eventService.deleteEvent(selectedEvent._id);
 
       setEvents(events.filter((e) => e._id !== selectedEvent._id));
       setDeleteDialogOpen(false);
       setSelectedEvent(null);
-
     } catch (err) {
       console.error(
         "%c[ERROR] Deletion failed",
@@ -464,7 +463,7 @@ const MyCreatedEventsPage = () => {
               <Card key={event._id} hover className="overflow-hidden">
                 <div className="flex flex-col md:flex-row">
                   {/* Event Banner */}
-                  <div className="w-full md:w-48 h-48 md:h-auto bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center flex-shrink-0">
+                  <div className="w-full md:w-48 h-48 md:h-auto bg-linear-to-br from-primary-500 to-secondary-500 flex items-center justify-center shrink-0">
                     <Calendar className="w-12 h-12 text-white opacity-50" />
                   </div>
 

@@ -13,9 +13,8 @@ const eventService = {
    */
   getAllEvents: async (params = {}) => {
     try {
-      
       const response = await api.get("/events", { params });
-      
+
       return response.data;
     } catch (error) {
       console.error(
@@ -34,9 +33,8 @@ const eventService = {
    */
   getEventById: async (eventId) => {
     try {
-      
       const response = await api.get(`/events/${eventId}`);
-      
+
       return response.data;
     } catch (error) {
       console.error(
@@ -54,9 +52,8 @@ const eventService = {
    */
   getMyEvents: async () => {
     try {
-      
       const response = await api.get("/registrations/my-events");
-      
+
       return response.data;
     } catch (error) {
       console.error(
@@ -75,9 +72,8 @@ const eventService = {
    */
   registerForEvent: async (eventId) => {
     try {
-      
       const response = await api.post(`/registrations/${eventId}`);
-      
+
       return response.data;
     } catch (error) {
       console.error(
@@ -96,9 +92,8 @@ const eventService = {
    */
   cancelRegistration: async (eventId) => {
     try {
-      
       const response = await api.delete(`/registrations/${eventId}`);
-      
+
       return response.data;
     } catch (error) {
       console.error(
@@ -113,13 +108,37 @@ const eventService = {
   /**
    * Create new event (for organizers)
    * @param {Object} eventData - Event details
+   * @param {File} posterFile - Optional poster/banner file
    * @returns {Promise} Created event
    */
-  createEvent: async (eventData) => {
+  createEvent: async (eventData, posterFile = null) => {
     try {
-      
-      const response = await api.post("/events", eventData);
-      
+      let requestData;
+      let headers = {};
+
+      if (posterFile) {
+        // If there's a file, use FormData
+        const formData = new FormData();
+        formData.append("poster", posterFile);
+
+        // Append all event data fields
+        Object.keys(eventData).forEach((key) => {
+          if (Array.isArray(eventData[key])) {
+            formData.append(key, JSON.stringify(eventData[key]));
+          } else {
+            formData.append(key, eventData[key]);
+          }
+        });
+
+        requestData = formData;
+        headers = { "Content-Type": "multipart/form-data" };
+      } else {
+        // No file, send as JSON
+        requestData = eventData;
+      }
+
+      const response = await api.post("/events", requestData, { headers });
+
       return response.data;
     } catch (error) {
       console.error(
@@ -139,9 +158,8 @@ const eventService = {
    */
   updateEvent: async (eventId, eventData) => {
     try {
-      
       const response = await api.put(`/events/${eventId}`, eventData);
-      
+
       return response.data;
     } catch (error) {
       console.error(
@@ -160,9 +178,8 @@ const eventService = {
    */
   deleteEvent: async (eventId) => {
     try {
-      
       const response = await api.delete(`/events/${eventId}`);
-      
+
       return response.data;
     } catch (error) {
       console.error(
@@ -180,9 +197,8 @@ const eventService = {
    */
   getMyCreatedEvents: async () => {
     try {
-      
       const response = await api.get("/events/my-events");
-      
+
       return response.data;
     } catch (error) {
       console.error(
@@ -201,17 +217,36 @@ const eventService = {
    */
   uploadBanner: async (file) => {
     try {
-      
       const formData = new FormData();
       formData.append("banner", file);
       const response = await api.post("/events/upload-banner", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      
+
       return response.data;
     } catch (error) {
       console.error(
         "%c[ERROR] Banner upload failed:",
+        "color: #ef4444; font-weight: bold",
+        error,
+      );
+      throw error;
+    }
+  },
+
+  /**
+   * Submit event for approval
+   * @param {string} eventId - Event ID
+   * @returns {Promise} Submission confirmation
+   */
+  submitForApproval: async (eventId) => {
+    try {
+      const response = await api.post(`/events/${eventId}/submit`);
+
+      return response.data;
+    } catch (error) {
+      console.error(
+        "%c[ERROR] Failed to submit event for approval:",
         "color: #ef4444; font-weight: bold",
         error,
       );

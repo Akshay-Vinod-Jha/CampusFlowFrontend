@@ -135,7 +135,7 @@ const EventCard = ({
       <Card hover className="overflow-hidden">
         <div className="relative">
           {/* Banner */}
-          <div className="w-full h-48 bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
+          <div className="w-full h-48 bg-linear-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
             <Calendar className="w-12 h-12 text-white opacity-50" />
           </div>
           {/* Status Badge Overlay */}
@@ -208,7 +208,7 @@ const EventCard = ({
     <Card hover className="overflow-hidden">
       <div className="flex flex-col md:flex-row">
         {/* Event Banner */}
-        <div className="w-full md:w-48 h-48 md:h-auto bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center flex-shrink-0 relative">
+        <div className="w-full md:w-48 h-48 md:h-auto bg-linear-to-br from-primary-500 to-secondary-500 flex items-center justify-center shrink-0 relative">
           <Calendar className="w-12 h-12 text-white opacity-50" />
           {isPast && (
             <div className="absolute top-3 left-3">

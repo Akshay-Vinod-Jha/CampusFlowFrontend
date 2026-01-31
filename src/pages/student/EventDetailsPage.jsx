@@ -46,9 +46,11 @@ const EventDetailsPage = () => {
       setLoading(true);
       setError("");
 
-      // Mock data (will be replaced with API call)
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      // Fetch event details from API
+      const response = await eventService.getEventById(eventId);
+      setEvent(response.data);
 
+      /* LEGACY MOCK DATA - REMOVED
       const mockEvent = {
         _id: eventId,
         title: "Tech Fest 2024",
@@ -107,11 +109,10 @@ const EventDetailsPage = () => {
           "Competition",
         ],
       };
+      */ // END LEGACY MOCK DATA
 
-      setEvent(mockEvent);
-      // Mock registration status check
-      setIsRegistered(Math.random() > 0.5); // Random for demo
-
+      // Check if user is already registered (from event data or separate call if needed)
+      // setIsRegistered will be set based on API response if available
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch event",
@@ -128,21 +129,23 @@ const EventDetailsPage = () => {
     try {
       setRegistering(true);
 
-      // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Simulate registration response
-      const mockRegistrationId =
-        "reg_" + Math.random().toString(36).substr(2, 9);
+      // Register for event via API
+      const response = await eventService.registerForEvent(eventId);
+      const registrationId = response.data._id || response.data.id;
 
       setIsRegistered(true);
       setRegisterDialogOpen(false);
       setSuccessDialogOpen(true);
 
+      // Update event registered count
+      setEvent((prev) => ({
+        ...prev,
+        registeredCount: prev.registeredCount + 1,
+      }));
+
       // Send registration confirmation email
       try {
-        await emailService.sendRegistrationEmail(mockRegistrationId);
-        
+        await emailService.sendRegistrationEmail(registrationId);
       } catch (emailErr) {
         console.warn("[EMAIL] Failed to send confirmation email:", emailErr);
         // Don't fail registration if email fails
@@ -265,7 +268,7 @@ const EventDetailsPage = () => {
         <div className="lg:col-span-2 space-y-6">
           {/* Event Banner */}
           <Card>
-            <div className="h-96 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-t-lg flex items-center justify-center">
+            <div className="h-96 bg-linear-to-br from-primary-500 to-secondary-500 rounded-t-lg flex items-center justify-center">
               <Calendar className="w-24 h-24 text-white opacity-50" />
             </div>
             <div className="p-6">
@@ -328,7 +331,7 @@ const EventDetailsPage = () => {
                 <ul className="space-y-2">
                   {event.requirements.map((req, index) => (
                     <li key={index} className="flex items-start gap-2">
-                      <CheckCircle className="w-5 h-5 text-success-600 mt-0.5 flex-shrink-0" />
+                      <CheckCircle className="w-5 h-5 text-success-600 mt-0.5 shrink-0" />
                       <span className="text-neutral-700">{req}</span>
                     </li>
                   ))}
@@ -417,7 +420,7 @@ const EventDetailsPage = () => {
 
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
+                  <Clock className="w-5 h-5 text-primary-600 mt-0.5 shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-neutral-900">
                       Date & Time
@@ -429,7 +432,7 @@ const EventDetailsPage = () => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
+                  <MapPin className="w-5 h-5 text-primary-600 mt-0.5 shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-neutral-900">
                       Location
@@ -439,7 +442,7 @@ const EventDetailsPage = () => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Users className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
+                  <Users className="w-5 h-5 text-primary-600 mt-0.5 shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-neutral-900">
                       Capacity
@@ -452,7 +455,7 @@ const EventDetailsPage = () => {
 
                 {event.type === "ONLINE" && (
                   <div className="flex items-start gap-3">
-                    <Globe className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
+                    <Globe className="w-5 h-5 text-primary-600 mt-0.5 shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-neutral-900">
                         Platform

@@ -63,9 +63,12 @@ const EventListingPage = () => {
       setLoading(true);
       setError("");
 
-      // Mock data for now (will be replaced with actual API call)
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate API delay
+      // Fetch approved events from API
+      const response = await eventService.getAllEvents({ status: "APPROVED" });
+      setAllEvents(response.data || []);
+      setFilteredEvents(response.data || []);
 
+      /* LEGACY MOCK DATA - REMOVED
       const mockEvents = [
         {
           _id: "1",
@@ -158,9 +161,7 @@ const EventListingPage = () => {
           status: "APPROVED",
         },
       ];
-
-      setEvents(mockEvents);
-      
+      */ // END LEGACY MOCK DATA
     } catch (err) {
       console.error(
         "%c[ERROR] Failed to fetch events",
@@ -174,15 +175,22 @@ const EventListingPage = () => {
   };
 
   // Filter events based on search and filters
-  const filteredEvents = events.filter((event) => {
-    const matchesSearch =
-      event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      event.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      selectedCategory === "all" || event.category === selectedCategory;
-    const matchesType = selectedType === "all" || event.type === selectedType;
-    return matchesSearch && matchesCategory && matchesType;
-  });
+  useEffect(() => {
+    applyFilters();
+  }, [searchTerm, categoryFilter, typeFilter, allEvents]);
+
+  const applyFilters = () => {
+    let filtered = allEvents.filter((event) => {
+      const matchesSearch =
+        event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        event.description.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory =
+        categoryFilter === "all" || event.category === categoryFilter;
+      const matchesType = typeFilter === "all" || event.type === typeFilter;
+      return matchesSearch && matchesCategory && matchesType;
+    });
+    setFilteredEvents(filtered);
+  };
 
   // Get category badge variant
   const getCategoryVariant = (category) => {
@@ -351,7 +359,7 @@ const EventListingPage = () => {
             return (
               <Card key={event._id} hover className="flex flex-col">
                 {/* Event Banner Placeholder */}
-                <div className="h-48 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-t-lg flex items-center justify-center">
+                <div className="h-48 bg-linear-to-br from-primary-500 to-secondary-500 rounded-t-lg flex items-center justify-center">
                   <Calendar className="w-16 h-16 text-white opacity-50" />
                 </div>
 

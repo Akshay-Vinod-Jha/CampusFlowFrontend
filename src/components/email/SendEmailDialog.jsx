@@ -145,7 +145,7 @@ const SendEmailDialog = ({ open, onClose, eventId, eventTitle }) => {
             {/* Info Notice */}
             <div className="p-4 bg-info-50 border border-info-200 rounded-lg">
               <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-info-600 flex-shrink-0 mt-0.5" />
+                <Mail className="w-5 h-5 text-info-600 shrink-0 mt-0.5" />
                 <div className="text-sm text-info-900">
                   <p className="font-medium mb-1">Email will be sent to:</p>
                   <ul className="list-disc ml-4 space-y-1 text-info-800">

@@ -52,7 +52,7 @@ const Alert = ({
       role="alert"
       {...props}
     >
-      <Icon className={`w-5 h-5 flex-shrink-0 mt-0.5 ${config.iconColor}`} />
+      <Icon className={`w-5 h-5 shrink-0 mt-0.5 ${config.iconColor}`} />
       <div className="flex-1">
         {title && <h5 className="font-semibold mb-1">{title}</h5>}
         <div className="text-sm">{children}</div>
@@ -60,7 +60,7 @@ const Alert = ({
       {onClose && (
         <button
           onClick={onClose}
-          className="flex-shrink-0 p-1 rounded hover:bg-black/5 transition-colors"
+          className="shrink-0 p-1 rounded hover:bg-black/5 transition-colors"
           aria-label="Close alert"
         >
           <X className="w-4 h-4" />

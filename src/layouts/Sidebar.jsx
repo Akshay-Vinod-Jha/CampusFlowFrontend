@@ -76,7 +76,7 @@ const Sidebar = ({ user, onLogout, pendingCount = 0 }) => {
       <div className="h-16 flex items-center justify-between px-4 border-b border-neutral-200">
         {!collapsed && (
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-linear-to-br from-primary-600 to-secondary-600 rounded-lg flex items-center justify-center">
               <Calendar className="w-5 h-5 text-white" />
             </div>
             <span className="font-bold text-lg text-neutral-900">
@@ -139,7 +139,7 @@ const Sidebar = ({ user, onLogout, pendingCount = 0 }) => {
                   }
                   title={collapsed ? item.label : ""}
                 >
-                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  <Icon className="w-5 h-5 shrink-0" />
                   {!collapsed && (
                     <>
                       <span className="flex-1">{item.label}</span>
@@ -169,7 +169,7 @@ const Sidebar = ({ user, onLogout, pendingCount = 0 }) => {
           }`}
           title={collapsed ? "Logout" : ""}
         >
-          <LogOut className="w-5 h-5 flex-shrink-0" />
+          <LogOut className="w-5 h-5 shrink-0" />
           {!collapsed && <span className="font-medium">Logout</span>}
         </button>
       </div>
